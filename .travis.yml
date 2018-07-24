@@ -19,4 +19,5 @@ before_script:
 
 script:
   - docker-compose up -d
+  - sleep 10
   - vendor/bin/phpunit
