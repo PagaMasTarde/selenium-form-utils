@@ -18,5 +18,6 @@ before_script:
   - phpenv config-rm xdebug.ini
 
 script:
+  - docker-compose-up -d
   - composer install
   - vendor/bin/phpunit
