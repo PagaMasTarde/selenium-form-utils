@@ -4,9 +4,7 @@
   "description": "Paga+Tarde PHP Library. Selenium helper to end a test purchase. Helper to test the payment validation and redirection",
   "type": "library",
   "require": {
-    "php": ">=5.3",
-    "nategood/httpful": "^0.2",
-    "nayjest/str-case-converter": "^1.0"
+    "php": ">=5.3"
   },
   "require-dev": {
     "pagamastarde/orders-api-client": "1.0.*",
