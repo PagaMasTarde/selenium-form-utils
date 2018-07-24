@@ -1,15 +1,24 @@
 sudo: required
+
 dist: precise
+
 language: php
+
 services:
   - docker
 before_install:
+  - sudo rm /usr/local/bin/docker-compose
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
+  - sudo apt-get update
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+  - docker --version
   - docker-compose --version
+
 before_script:
   - phpenv config-rm xdebug.ini
+
 matrix:
   include:
   - php: "7.2"
@@ -17,8 +26,7 @@ matrix:
   - php: "7.0"
   - php: "5.6"
   - php: "5.5"
-  - php: "5.3"
+
 script:
-  - docker-compose up -d
   - composer install
   - vendor/bin/phpunit
