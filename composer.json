@@ -1,0 +1,34 @@
+{
+  "name": "pagamastarde/selenium-form-utils",
+  "license": "proprietary",
+  "description": "Paga+Tarde PHP Library. Selenium helper to end a test purchase. Helper to test the payment validation and redirection",
+  "type": "library",
+  "require": {
+    "php": ">=5.3",
+    "nategood/httpful": "^0.2",
+    "nayjest/str-case-converter": "^1.0"
+  },
+  "require-dev": {
+    "pagamastarde/orders-api-client": "1.0.*",
+    "phpunit/phpunit": "^4.8",
+    "phpunit/phpunit-selenium": "^2.0",
+    "facebook/webdriver": "^1.1",
+    "fzaninotto/faker": "^1.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "PagaMasTarde\\SeleniumFormUtils\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Test\\PagaMasTarde\\SeleniumFormUtils\\": "test/"
+    }
+  },
+  "authors": [
+    {
+      "name": "DigitalOrigin",
+      "email": "cromero@digitalorigin.com"
+    }
+  ]
+}
