@@ -17,7 +17,7 @@ before_install:
 
 before_script:
   - composer install
-  - docker-compose up -d
 
 script:
+  - docker-compose up -d
   - vendor/bin/phpunit
