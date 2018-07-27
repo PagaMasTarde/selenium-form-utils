@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2b9faab037fc23523ab95da4527a5e92",
+    "content-hash": "c1e01df96d0b897587b609a3438a215e",
     "packages": [],
     "packages-dev": [
         {
@@ -248,16 +248,16 @@
         },
         {
             "name": "pagamastarde/orders-api-client",
-            "version": "v1.0.5",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PagaMasTarde/ordersApiClient.git",
-                "reference": "bf38c7aed8d2bc4b5f8b083a90b3bafd8e592d48"
+                "reference": "7e93fc568642c27f5a30d75370bad320f1d106e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PagaMasTarde/ordersApiClient/zipball/bf38c7aed8d2bc4b5f8b083a90b3bafd8e592d48",
-                "reference": "bf38c7aed8d2bc4b5f8b083a90b3bafd8e592d48",
+                "url": "https://api.github.com/repos/PagaMasTarde/ordersApiClient/zipball/7e93fc568642c27f5a30d75370bad320f1d106e0",
+                "reference": "7e93fc568642c27f5a30d75370bad320f1d106e0",
                 "shasum": ""
             },
             "require": {
@@ -286,7 +286,7 @@
                 }
             ],
             "description": "PagaMasTarde Orders Api Client in PHP. Use the api with simple methods and using OOP.",
-            "time": "2018-07-09T10:40:00+00:00"
+            "time": "2018-07-24T18:52:23+00:00"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -1320,7 +1320,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "pagamastarde/orders-api-client": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

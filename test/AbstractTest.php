@@ -9,6 +9,7 @@ use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverElement;
 use Facebook\WebDriver\WebDriverExpectedCondition;
 use PHPUnit\Framework\TestCase;
+use Test\PagaMasTarde\OrdersApiClient\ClientTest;
 
 /**
  * Class AbstractTest
@@ -126,5 +127,21 @@ abstract class AbstractTest extends TestCase
     protected function quit()
     {
         $this->webDriver->quit();
+    }
+
+    /**
+     * @return string
+     *
+     * @throws \Httpful\Exception\ConnectionErrorException
+     * @throws \PagaMasTarde\OrdersApiClient\Exception\HttpException
+     * @throws \PagaMasTarde\OrdersApiClient\Exception\ValidationException
+     * @throws \ReflectionException
+     */
+    protected function getFormUrl()
+    {
+        $orderTestClass = new ClientTest();
+        $order = $orderTestClass->testCreateOrder();
+
+        return $order->getActionUrls()->getForm();
     }
 }
