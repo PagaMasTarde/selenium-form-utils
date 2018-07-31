@@ -35,13 +35,20 @@ class SeleniumHelper
         self::waitToLoad();
         self::removeCookiesNotification();
         self::validateFormUrl();
+        $maxSteps = 15;
         do {
             $formStep = self::getFormStep();
             $formStepClass = self::getStepClass($formStep);
             /** @var AbstractStep $stepClass */
             $stepClass = new $formStepClass(self::$webDriver);
             $stepClass->run();
-        } while ($formStep !== Approved::STEP);
+            self::waitToLoad();
+            --$maxSteps;
+        } while ($formStep !== Approved::STEP && $maxSteps > 0);
+
+        if ($maxSteps <= 0) {
+            throw new \Exception('Error while finishing form, step: ' . $formStep);
+        }
     }
 
     /**

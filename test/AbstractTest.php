@@ -8,6 +8,9 @@ use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverElement;
 use Facebook\WebDriver\WebDriverExpectedCondition;
+use Faker\Factory;
+use PagaMasTarde\OrdersApiClient\Client;
+use PagaMasTarde\OrdersApiClient\Model\Order;
 use PHPUnit\Framework\TestCase;
 use Test\PagaMasTarde\OrdersApiClient\ClientTest;
 
@@ -143,5 +146,103 @@ abstract class AbstractTest extends TestCase
         $order = $orderTestClass->testCreateOrder();
 
         return $order->getActionUrls()->getForm();
+    }
+
+    /**
+     * @throws \Httpful\Exception\ConnectionErrorException
+     * @throws \PagaMasTarde\OrdersApiClient\Exception\HttpException
+     * @throws \PagaMasTarde\OrdersApiClient\Exception\ValidationException
+     */
+    protected function getBasicOrderFormUrl()
+    {
+        $orderTestClass = new ClientTest();
+        $orderApiConfiguration = $orderTestClass->getApiConfiguration();
+        $orderClient = new Client(
+            $orderApiConfiguration->getPublicKey(),
+            $orderApiConfiguration->getPrivateKey()
+        );
+        $faker = Factory::create();
+
+        $userAddress =  new Order\User\Address();
+        $userAddress
+            ->setZipCode($faker->postcode)
+            ->setFullName($faker->firstName)
+            ->setCountryCode('ES')
+            ->setCity($faker->city)
+            ->setAddress($faker->address)
+        ;
+
+        $orderShippingAddress =  new Order\User\Address();
+        $orderShippingAddress
+            ->setZipCode($faker->postcode)
+            ->setFullName($faker->firstName)
+            ->setCountryCode('ES')
+            ->setCity($faker->city)
+            ->setAddress($faker->address)
+        ;
+        $orderBillingAddress = new Order\User\Address();
+        $orderBillingAddress
+            ->setZipCode($faker->postcode)
+            ->setFullName($faker->firstName)
+            ->setCountryCode('ES')
+            ->setCity($faker->city)
+            ->setAddress($faker->address)
+        ;
+
+        $orderUser = new Order\User();
+        $orderUser
+            ->setAddress($userAddress)
+            ->setFullName($userAddress->getFullName())
+            ->setEmail($faker->email)
+            ->setBillingAddress($orderBillingAddress)
+            ->setShippingAddress($orderShippingAddress)
+        ;
+
+        $details = new Order\ShoppingCart\Details();
+        $details->setShippingCost($faker->numberBetween(1, 1000));
+        $product = new Order\ShoppingCart\Details\Product();
+        $product
+            ->setAmount($faker->numberBetween(400, 5000))
+            ->setQuantity(1)
+            ->setDescription($faker->text);
+        $details->addProduct($product);
+
+        $orderShoppingCart = new Order\ShoppingCart();
+        $orderShoppingCart
+            ->setDetails($details)
+            ->setPromotedAmount(0)
+            ->setTotalAmount($product->getAmount() + $details->getShippingCost())
+        ;
+        $orderConfigurationUrls = new Order\Configuration\Urls();
+        $orderConfigurationUrls
+            ->setCancel($faker->url)
+            ->setKo($faker->url)
+            ->setOk($faker->url)
+        ;
+        $orderChannel = new Order\Configuration\Channel();
+        $orderChannel
+            ->setAssistedSale(false)
+            ->setType(Order\Configuration\Channel::ONLINE)
+        ;
+        $orderConfiguration = new Order\Configuration();
+        $orderConfiguration
+            ->setChannel($orderChannel)
+            ->setUrls($orderConfigurationUrls)
+        ;
+
+        $metadata = new Order\Metadata();
+        $metadata->addMetadata('a', 'b');
+
+        $order = new Order();
+        $order
+            ->setConfiguration($orderConfiguration)
+            ->setShoppingCart($orderShoppingCart)
+            ->setMetadata($metadata)
+            ->setUser($orderUser)
+        ;
+
+        $orderCreated = $orderClient->createOrder($order);
+
+        return $orderCreated->getActionUrls()->getForm();
     }
 }

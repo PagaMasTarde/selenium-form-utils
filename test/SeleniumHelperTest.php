@@ -15,8 +15,18 @@ class SeleniumHelperTest extends AbstractTest
      */
     public function testFinishForm()
     {
-        //$this->webDriver->get($this->getFormUrl());
-        $this->webDriver->get('https://form.pagamastarde.com/3d993762ef7740ca9dc0050e1e433cdd/confirm-data');
+        $this->webDriver->get($this->getFormUrl());
         SeleniumHelper::finishForm($this->webDriver);
+        $this->webDriver->quit();
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testBasicOrderFinishForm()
+    {
+        $this->webDriver->get($this->getBasicOrderFormUrl());
+        SeleniumHelper::finishForm($this->webDriver);
+        $this->webDriver->quit();
     }
 }

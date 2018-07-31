@@ -23,7 +23,7 @@ class ConfirmData extends AbstractStep
      */
     public function run()
     {
-        $this->validateStep();
+        $this->validateStep(self::STEP);
         //Click on confirm:
         $confirmCheckbox = $this->webDriver->findElement(WebDriverBy::className('Form-checkboxSkin'));
         $confirmCheckbox->click();

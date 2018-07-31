@@ -14,11 +14,6 @@ use Facebook\WebDriver\WebDriverExpectedCondition;
 abstract class AbstractStep implements StepInterface
 {
     /**
-     * Class Current Step
-     */
-    const STEP = '';
-
-    /**
      * @var WebDriver
      */
     protected $webDriver;
@@ -66,20 +61,47 @@ abstract class AbstractStep implements StepInterface
     }
 
     /**
+     * @param string $step
+     *
      * @throws \Exception
      */
-    public function validateStep()
+    public function validateStep($step)
     {
+        $element = WebDriverBy::cssSelector(".Loading .is-disabled");
+        $condition = WebDriverExpectedCondition::presenceOfElementLocated($element);
+        $this->webDriver->wait()->until($condition);
 
         $path = parse_url($this->webDriver->getCurrentURL(), PHP_URL_PATH);
         $arguments = explode(DIRECTORY_SEPARATOR, $path);
-        $step = '';
+        $tempStep = '';
         for ($i = 2; $i < count($arguments); $i++) {
-            $step .= DIRECTORY_SEPARATOR.$arguments[$i];
+            $tempStep .= DIRECTORY_SEPARATOR.$arguments[$i];
         }
 
-        if (self::STEP !== $step) {
-            throw new \Exception('Wrong step: ' . $step);
+        if ($step !== $tempStep) {
+            throw new \Exception('Wrong step: ' . $tempStep);
         }
+    }
+
+    /**
+     * @param $iFrameLocator
+     *
+     * @throws \Facebook\WebDriver\Exception\NoSuchElementException
+     * @throws \Facebook\WebDriver\Exception\TimeOutException
+     */
+    public function moveToIFrame($iFrameLocator)
+    {
+        $condition = WebDriverExpectedCondition::frameToBeAvailableAndSwitchToIt($iFrameLocator);
+        $this->webDriver->wait()->until($condition);
+    }
+
+    /**
+     * Switch to parent window
+     */
+    public function moveToParent()
+    {
+        $handles=$this->webDriver->getWindowHandles();
+        $parent = end($handles);
+        $this->webDriver->switchTo()->window($parent);
     }
 }
