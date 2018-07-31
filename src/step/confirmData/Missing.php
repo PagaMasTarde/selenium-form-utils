@@ -33,6 +33,21 @@ class Missing extends AbstractStep
     const PHONE = '600123123';
 
     /**
+     * Address
+     */
+    const ADDRESS = 'Paseo Castellana, 95';
+
+    /**
+     * City
+     */
+    const CITY = 'Madrid';
+
+    /**
+     * ZipCode
+     */
+    const ZIP_CODE = '28046';
+
+    /**
      * Pass from confirm-data to next step in Application Form
      *
      * @throws \Exception
@@ -85,6 +100,36 @@ class Missing extends AbstractStep
         try {
             $name = $this->webDriver->findElement(WebDriverBy::name('cellphone'));
             $name->clear()->sendKeys(self::PHONE);
+        } catch (\Exception $exception) {
+            unset($exception);
+        }
+
+        /*
+         * Optional address:
+         */
+        try {
+            $name = $this->webDriver->findElement(WebDriverBy::name('address'));
+            $name->clear()->sendKeys(self::ADDRESS);
+        } catch (\Exception $exception) {
+            unset($exception);
+        }
+
+        /*
+         * Optional city:
+         */
+        try {
+            $name = $this->webDriver->findElement(WebDriverBy::name('city'));
+            $name->clear()->sendKeys(self::CITY);
+        } catch (\Exception $exception) {
+            unset($exception);
+        }
+
+        /*
+         * Optional zipcode:
+         */
+        try {
+            $name = $this->webDriver->findElement(WebDriverBy::name('zipcode'));
+            $name->clear()->sendKeys(self::ZIP_CODE);
         } catch (\Exception $exception) {
             unset($exception);
         }
