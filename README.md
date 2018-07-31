@@ -30,8 +30,13 @@ the ordersApiClient will also available.
 
 ```php
 
-//TODO
+//Once the webDriver of selenium is inside Paga+Tarde form, basically:
+// $webdriver->getCurrentUrl == 'form.pagamastarde.com/....'
+//Then you can use this tool to finish the form:
 
+SeleniumHelper::finishForm($this->webDriver);
+
+//The method will end once the form is approved, so the current URL will be OK_URL of the order
 ```
 
 ## Help us to improve
