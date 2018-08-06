@@ -4,7 +4,6 @@ namespace PagaMasTarde\SeleniumFormUtils\Step\Returning;
 
 use Facebook\WebDriver\WebDriverBy;
 use PagaMasTarde\SeleniumFormUtils\Step\AbstractStep;
-use PagaMasTarde\SeleniumFormUtils\Step\ConfirmData\Missing;
 
 /**
  * Class EndYourPurchase

@@ -3,7 +3,6 @@
 namespace PagaMasTarde\SeleniumFormUtils\Step;
 
 use Facebook\WebDriver\WebDriverBy;
-use PagaMasTarde\SeleniumFormUtils\Step\ConfirmData\Missing;
 
 /**
  * Class Returning
