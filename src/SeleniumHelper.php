@@ -25,13 +25,20 @@ class SeleniumHelper
     static protected $webDriver;
 
     /**
+     * @var string $mobilePhone needed to identify returning users
+     */
+    static public $mobilePhone = null;
+
+    /**
      * @param WebDriver $webDriver
+     * @param string $mobilePhone
      *
      * @throws \Exception
      */
-    public static function finishForm(WebDriver $webDriver)
+    public static function finishForm(WebDriver $webDriver, $mobilePhone = null)
     {
         self::$webDriver = $webDriver;
+        self::$mobilePhone = $mobilePhone;
         self::waitToLoad();
         self::removeCookiesNotification();
         self::validateFormUrl();

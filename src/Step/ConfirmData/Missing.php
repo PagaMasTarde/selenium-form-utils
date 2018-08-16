@@ -4,6 +4,7 @@ namespace PagaMasTarde\SeleniumFormUtils\Step\ConfirmData;
 
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverSelect;
+use PagaMasTarde\SeleniumFormUtils\SeleniumHelper;
 use PagaMasTarde\SeleniumFormUtils\Step\AbstractStep;
 
 /**
@@ -134,7 +135,38 @@ class Missing extends AbstractStep
             unset($exception);
         }
 
-        $formContinue = $this->webDriver->findElement(WebDriverBy::name('edit_customer_data_form_continue'));
-        $formContinue->click();
+        /*
+         * Optional password:
+         */
+        try {
+            $name = $this->webDriver->findElement(WebDriverBy::name('password'));
+            if (null === SeleniumHelper::$mobilePhone) {
+                $name->clear()->sendKeys(substr(self::PHONE, -4));
+            } else {
+                $name->clear()->sendKeys(substr(SeleniumHelper::$mobilePhone, -4));
+            }
+        } catch (\Exception $exception) {
+            unset($exception);
+        }
+
+        /*
+         * Click form continue
+         */
+        try {
+            $formContinue = $this->webDriver->findElement(WebDriverBy::name('edit_customer_data_form_continue'));
+            $formContinue->click();
+        } catch (\Exception $exception) {
+            unset($exception);
+        }
+
+        /*
+         * Click login button
+         */
+        try {
+            $formContinue = $this->webDriver->findElement(WebDriverBy::name('login_modal_loginButton'));
+            $formContinue->click();
+        } catch (\Exception $exception) {
+            unset($exception);
+        }
     }
 }
