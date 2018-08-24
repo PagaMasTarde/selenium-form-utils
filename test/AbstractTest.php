@@ -153,7 +153,7 @@ abstract class AbstractTest extends TestCase
      * @throws \PagaMasTarde\OrdersApiClient\Exception\HttpException
      * @throws \PagaMasTarde\OrdersApiClient\Exception\ValidationException
      */
-    protected function getBasicOrderFormUrl()
+    protected function getBasicOrder()
     {
         $orderTestClass = new ClientTest();
         $orderApiConfiguration = $orderTestClass->getApiConfiguration();
@@ -243,6 +243,6 @@ abstract class AbstractTest extends TestCase
 
         $orderCreated = $orderClient->createOrder($order);
 
-        return $orderCreated->getActionUrls()->getForm();
+        return $orderCreated;
     }
 }

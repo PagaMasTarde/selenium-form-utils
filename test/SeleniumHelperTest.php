@@ -13,6 +13,18 @@ class SeleniumHelperTest extends AbstractTest
     /**
      * @throws \Exception
      */
+    public function testBasicOrderCancelForm()
+    {
+        $order = $this->getBasicOrder();
+        $this->webDriver->get($order->getActionUrls()->getForm());
+        SeleniumHelper::cancelForm($this->webDriver);
+        $this->assertEquals($this->webDriver->getCurrentUrl(), $order->getConfiguration()->getUrls()->getCancel());
+        $this->webDriver->quit();
+    }
+
+    /**
+     * @throws \Exception
+     */
     public function testFinishForm()
     {
         $this->webDriver->get($this->getFormUrl());
@@ -25,7 +37,7 @@ class SeleniumHelperTest extends AbstractTest
      */
     public function testBasicOrderFinishForm()
     {
-        $this->webDriver->get($this->getBasicOrderFormUrl());
+        $this->webDriver->get($this->getBasicOrder()->getActionUrls()->getForm());
         SeleniumHelper::finishForm($this->webDriver);
         $this->webDriver->quit();
     }

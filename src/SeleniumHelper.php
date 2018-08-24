@@ -59,6 +59,30 @@ class SeleniumHelper
     }
 
     /**
+     * @param WebDriver $webDriver
+     * @param string $mobilePhone
+     *
+     * @throws \Exception
+     */
+    public static function cancelForm(WebDriver $webDriver, $mobilePhone = null)
+    {
+        self::$webDriver = $webDriver;
+        self::$mobilePhone = $mobilePhone;
+        self::waitToLoad();
+        self::removeCookiesNotification();
+        self::validateFormUrl();
+
+        self::$webDriver->wait()->until(
+            WebDriverExpectedCondition::elementToBeClickable(
+                WebDriverBy::name('back_to_store_button')
+            )
+        );
+
+        $formCancel = self::$webDriver->findElement(WebDriverBy::name('back_to_store_button'));
+        $formCancel->click();
+    }
+
+    /**
      * @throws \Exception
      */
     protected static function validateFormUrl()
