@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/PagaMasTarde/selenium-form-utils.svg?branch=master)](https://travis-ci.org/PagaMasTarde/selenium-form-utils)
 [![Latest Stable Version](https://poser.pugx.org/pagamastarde/selenium-form-utils/v/stable)](https://packagist.org/packages/pagamastarde/selenium-form-utils)
 [![composer.lock](https://poser.pugx.org/pagamastarde/selenium-form-utils/composerlock)](https://packagist.org/packages/pagamastarde/selenium-form-utils)
-[![Maintainability](https://api.codeclimate.com/v1/badges/24375eb9cc615ddcce28/maintainability)](https://codeclimate.com/github/PagaMasTarde/selenium-form-utils/maintainability)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/PagaMasTarde/selenium-form-utils/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/PagaMasTarde/selenium-form-utils/?branch=master)
 
 Selenium Form Utils will help you when developing integration test of Paga+Tarde. The utils will go pass paga+tarde form to ensure you can test the Notification and the Redirection.
 Be sure that KO and OK controllers work. You can automate your testing using travis-ci or circle-ci.
