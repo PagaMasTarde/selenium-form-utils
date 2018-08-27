@@ -139,6 +139,8 @@ abstract class AbstractTest extends TestCase
      * @throws \PagaMasTarde\OrdersApiClient\Exception\HttpException
      * @throws \PagaMasTarde\OrdersApiClient\Exception\ValidationException
      * @throws \ReflectionException
+     *
+     * @return string
      */
     protected function getFormUrl()
     {
@@ -152,6 +154,8 @@ abstract class AbstractTest extends TestCase
      * @throws \Httpful\Exception\ConnectionErrorException
      * @throws \PagaMasTarde\OrdersApiClient\Exception\HttpException
      * @throws \PagaMasTarde\OrdersApiClient\Exception\ValidationException
+     *
+     * @return \PagaMasTarde\OrdersApiClient\Model\Order
      */
     protected function getBasicOrder()
     {
