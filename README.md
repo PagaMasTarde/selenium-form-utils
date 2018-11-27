@@ -46,6 +46,22 @@ SeleniumHelper::cancelForm($this->webDriver);
 
 ```
 
+
+## To Develop and improve the library:
+
+after doing the modifications please run the precised testing
+
+```bash
+docker-compose up -d
+
+docker-compose exec php php-5.3 vendor/bin/phpunit
+docker-compose exec php php-5.4 vendor/bin/phpunit
+docker-compose exec php php-5.6 vendor/bin/phpunit
+docker-compose exec php php-7.0 vendor/bin/phpunit
+docker-compose exec php php-7.1 vendor/bin/phpunit
+docker-compose exec php php-7.2 vendor/bin/phpunit
+```
+
 ## Help us to improve
 
 We are happy to accept suggestions or pull requests. If you are willing to help us develop better software

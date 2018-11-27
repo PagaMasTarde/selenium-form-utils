@@ -10,8 +10,8 @@ jobs:
           docker_layer_caching: true
       - run: sudo apt install -y libsqlite3-dev zlib1g-dev
       - run: sudo docker-php-ext-install zip
+      - run: docker-compose up -d
       - run: sudo composer self-update
       - run: composer update
-      - run: docker run -d --name phpfarm splitbrain/phpfarm
       - run: docker cp ./ phpfarm:/var/www
-      - run: docker exec phpfarm php-5.6 vendor/bin/phpunit
+      - run: docker-compose exec php php-5.6 vendor/bin/phpunit
