@@ -13,5 +13,5 @@ jobs:
       - run: sudo composer self-update
       - run: composer update
       - run: docker run -d --name phpfarm splitbrain/phpfarm
-      - run: docker cp * phpfarm
+      - run: docker cp ./ phpfarm:/var/www
       - run: docker exec phpfarm php-5.6 vendor/bin/phpunit
