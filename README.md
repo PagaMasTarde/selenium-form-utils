@@ -1,7 +1,6 @@
 # Selenium Form Utils <img src="https://pagamastarde.com/img/icons/logo.svg" width="100" align="right">
 
-[![Build Status](https://travis-ci.org/PagaMasTarde/selenium-form-utils.svg?branch=master)](https://travis-ci.org/PagaMasTarde/selenium-form-utils)
-[![Latest Stable Version](https://poser.pugx.org/pagamastarde/selenium-form-utils/v/stable)](https://packagist.org/packages/pagamastarde/selenium-form-utils)
+[![CircleCI](https://circleci.com/gh/PagaMasTarde/selenium-form-utils/tree/master.svg?style=svg)](https://circleci.com/gh/PagaMasTarde/selenium-form-utils/tree/master)[![Latest Stable Version](https://poser.pugx.org/pagamastarde/selenium-form-utils/v/stable)](https://packagist.org/packages/pagamastarde/selenium-form-utils)
 [![composer.lock](https://poser.pugx.org/pagamastarde/selenium-form-utils/composerlock)](https://packagist.org/packages/pagamastarde/selenium-form-utils)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/PagaMasTarde/selenium-form-utils/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/PagaMasTarde/selenium-form-utils/?branch=master)
 
