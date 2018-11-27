@@ -7,11 +7,11 @@
     "php": ">=5.3"
   },
   "require-dev": {
-    "pagamastarde/orders-api-client": "^1.0",
     "phpunit/phpunit": "^4.8",
+    "pagamastarde/orders-api-client": "^1.0",
     "phpunit/phpunit-selenium": "^2.0",
     "facebook/webdriver": "^1.1",
-    "fzaninotto/faker": "^1.7"
+    "fzaninotto/faker": "^1.8"
   },
   "autoload": {
     "psr-4": {
