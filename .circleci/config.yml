@@ -2,18 +2,24 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/php:7.1-node-browsers
+      - image: splitbrain/phpfarm
     working_directory: ~/repo
     steps:
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
-      - run:
-          name: Download Selenium
-          command: curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
-      - run:
-          name: Start Selenium
-          command: java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
-          background: true
-      - run: composer install
-      - run: php vendor/bin/phpunit
+      - run: curl -s https://gist.githubusercontent.com/frgomes/a6f889583860f5b330c06c8b46fa0f42/raw/ea73323e97ae8b9d5c6e27dbd6c00811cdf49bbc/install-docker.sh
+      - run: install-docker.sh
+      - run: curl -s https://getcomposer.org/installer | php-5.6 && mv composer.phar /usr/local/bin/composer
+      - run: php-5.3 /usr/local/bin/composer install
+      - run: php-5.3 vendor/bin/phpunit
+      - run: php-5.4 /usr/local/bin/composer install
+      - run: php-5.4 vendor/bin/phpunit
+      - run: php-5.5 /usr/local/bin/composer install
+      - run: php-5.5 vendor/bin/phpunit
+      - run: php-5.6 /usr/local/bin/composer install
+      - run: php-5.6 vendor/bin/phpunit
+      - run: php-7.0 /usr/local/bin/composer install
+      - run: php-7.0 vendor/bin/phpunit
+      - run: php-7.1 /usr/local/bin/composer install
+      - run: php-7.1 vendor/bin/phpunit
+      - run: php-7.2 /usr/local/bin/composer install
+      - run: php-7.2 vendor/bin/phpunit
