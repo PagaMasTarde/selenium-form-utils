@@ -11,6 +11,5 @@ jobs:
       - run: sudo curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
       - run: sudo chmod +x /usr/local/bin/docker-compose
       - run: docker-compose up -d
-      - run: curl -s https://getcomposer.org/installer | php-5.6 && mv composer.phar /usr/local/bin/composer
       - run: composer install
       - run: php vendor/bin/phpunit
