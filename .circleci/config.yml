@@ -12,4 +12,5 @@ jobs:
       - run: sudo chmod +x /usr/local/bin/docker-compose
       - run: docker-compose up -d
       - run: composer install
+      - run: sleep 10
       - run: php vendor/bin/phpunit
