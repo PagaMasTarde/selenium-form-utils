@@ -3,9 +3,21 @@ jobs:
   build:
     docker:
       - image: splitbrain/phpfarm
-    working_directory: ~/shopperLibrary
+    working_directory: ~/repo
     steps:
       - checkout
+      - run: apt install \
+          apt-transport-https \
+          ca-certificates \
+          curl \
+          gnupg2 \
+          software-properties-common
+      - run: add-apt-repository \
+          "deb [arch=amd64] https://download.docker.com/linux/debian \
+          $(lsb_release -cs) \
+          stable"
+      - run: apt update && apt install docker-ce
+      - run: curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
       - run: curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
       - run: chmod +x /usr/local/bin/docker-compose
       - run: docker-compose up -d
