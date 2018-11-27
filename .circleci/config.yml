@@ -20,6 +20,7 @@ jobs:
           command: |
             docker-compose up -d
             docker cp ./ php:/var/www
+            sleep 10
       - run:
           name: PHP 7.2
           command: docker-compose exec php php-7.2 vendor/bin/phpunit
