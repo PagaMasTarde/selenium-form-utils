@@ -1,0 +1,26 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: splitbrain/phpfarm
+    working_directory: ~/shopperLibrary
+    steps:
+      - checkout
+      - run: curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+      - run: chmod +x /usr/local/bin/docker-compose
+      - run: docker-compose up -d
+      - run: curl -s https://getcomposer.org/installer | php-5.6 && mv composer.phar /usr/local/bin/composer
+      - run: php-5.3 /usr/local/bin/composer install
+      - run: php-5.3 vendor/bin/phpunit
+      - run: php-5.4 /usr/local/bin/composer install
+      - run: php-5.4 vendor/bin/phpunit
+      - run: php-5.5 /usr/local/bin/composer install
+      - run: php-5.5 vendor/bin/phpunit
+      - run: php-5.6 /usr/local/bin/composer install
+      - run: php-5.6 vendor/bin/phpunit
+      - run: php-7.0 /usr/local/bin/composer install
+      - run: php-7.0 vendor/bin/phpunit
+      - run: php-7.1 /usr/local/bin/composer install
+      - run: php-7.1 vendor/bin/phpunit
+      - run: php-7.2 /usr/local/bin/composer install
+      - run: php-7.2 vendor/bin/phpunit
