@@ -6,6 +6,12 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
+      - run: apt-get update && apt-get install -y apt-transport-https
+      - run: apt-get install -y ca-certificates curl gnupg2 software-properties-common
+      - run: apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+      - run: echo "deb https://apt.dockerproject.org/repo debian-jessie main" > /etc/apt/sources.list.d/docker.list
+      - run: apt-get update && apt-get install -y docker-engine
+      - run: service docker start
       - run: curl -s https://getcomposer.org/installer | php-5.6 && mv composer.phar /usr/local/bin/composer
       - run: php-5.3 /usr/local/bin/composer install
       - run: php-5.3 vendor/bin/phpunit
