@@ -148,39 +148,10 @@ abstract class AbstractTest extends TestCase
         );
         $faker = Factory::create();
 
-        $userAddress =  new Order\User\Address();
-        $userAddress
-            ->setZipCode($faker->postcode)
-            ->setFullName($faker->firstName)
-            ->setCountryCode('ES')
-            ->setCity($faker->city)
-            ->setAddress($faker->address)
-        ;
-
-        $orderShippingAddress =  new Order\User\Address();
-        $orderShippingAddress
-            ->setZipCode($faker->postcode)
-            ->setFullName($faker->firstName)
-            ->setCountryCode('ES')
-            ->setCity($faker->city)
-            ->setAddress($faker->address)
-        ;
-        $orderBillingAddress = new Order\User\Address();
-        $orderBillingAddress
-            ->setZipCode($faker->postcode)
-            ->setFullName($faker->firstName)
-            ->setCountryCode('ES')
-            ->setCity($faker->city)
-            ->setAddress($faker->address)
-        ;
-
         $orderUser = new Order\User();
         $orderUser
-            ->setAddress($userAddress)
-            ->setFullName($userAddress->getFullName())
+            ->setFullName($faker->firstName . ' ' . $faker->lastName)
             ->setEmail($faker->email)
-            ->setBillingAddress($orderBillingAddress)
-            ->setShippingAddress($orderShippingAddress)
         ;
 
         $details = new Order\ShoppingCart\Details();
@@ -215,14 +186,10 @@ abstract class AbstractTest extends TestCase
             ->setUrls($orderConfigurationUrls)
         ;
 
-        $metadata = new Order\Metadata();
-        $metadata->addMetadata('a', 'b');
-
         $order = new Order();
         $order
             ->setConfiguration($orderConfiguration)
             ->setShoppingCart($orderShoppingCart)
-            ->setMetadata($metadata)
             ->setUser($orderUser)
         ;
 
