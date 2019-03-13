@@ -1,7 +1,7 @@
 {
-  "name": "pagamastarde/selenium-form-utils",
+  "name": "pagantis/selenium-form-utils",
   "license": "proprietary",
-  "description": "Paga+Tarde PHP Library. Selenium helper to end a test purchase. Helper to test the payment validation and redirection",
+  "description": "Pagantis PHP Library. Selenium helper to end a test purchase. Helper to test the payment validation and redirection",
   "type": "library",
   "require": {
     "php": ">=5.3"
@@ -26,8 +26,8 @@
   },
   "authors": [
     {
-      "name": "DigitalOrigin",
-      "email": "cromero@digitalorigin.com"
+      "name": "Pagantis",
+      "email": "integration@pagantis.com"
     }
   ]
 }
