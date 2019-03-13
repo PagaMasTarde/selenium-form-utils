@@ -18,8 +18,5 @@ jobs:
             docker cp ./ php:/var/www
             sleep 5
       - run:
-          name: PHP 5.6
-          command: docker-compose exec php php-5.6 vendor/bin/phpunit
-      - run:
-          name: PHP 7.2
-          command: docker-compose exec php php-7.2 vendor/bin/phpunit
+          name: PHP 7.1
+          command: docker-compose exec php php-7.1 vendor/bin/phpunit
