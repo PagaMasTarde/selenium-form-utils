@@ -16,8 +16,6 @@ Install the library by:
 
 - Downloading it from [here](https://github.com/pagantis/selenium-form-utils/releases/latest)
 
-https://github.com/pagantis/selenium-form-utils/releases/latest
-
 - Using Composer:
 ```php
 composer require pagantis/selenium-form-utils
