@@ -4,6 +4,7 @@ namespace Pagantis\SeleniumFormUtils\Step\ConfirmData;
 
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverSelect;
+use Faker\Factory;
 use Pagantis\SeleniumFormUtils\SeleniumHelper;
 use Pagantis\SeleniumFormUtils\Step\AbstractStep;
 
@@ -17,31 +18,6 @@ class Missing extends AbstractStep
      * Handler step
      */
     const STEP = '/confirm-data/missing';
-
-    /**
-     * Full name
-     */
-    const FULL_NAME = 'John Doe Martínez';
-
-    /**
-     * Phone
-     */
-    const PHONE = '600123123';
-
-    /**
-     * Address
-     */
-    const ADDRESS = 'Paseo Castellana, 95';
-
-    /**
-     * City
-     */
-    const CITY = 'Madrid';
-
-    /**
-     * ZipCode
-     */
-    const ZIP_CODE = '28046';
 
     /**
      * @return string
@@ -76,7 +52,11 @@ class Missing extends AbstractStep
          */
         try {
             $name = $this->webDriver->findElement(WebDriverBy::name('name'));
-            $name->clear()->sendKeys(self::FULL_NAME);
+            $name->clear()->sendKeys(
+                $this->faker->firstName . ' ' .
+                $this->faker->lastName . ' ' .
+                $this->faker->lastName
+            );
         } catch (\Exception $exception) {
             unset($exception);
         }
@@ -96,11 +76,11 @@ class Missing extends AbstractStep
          */
         try {
             $select = new WebDriverSelect($this->webDriver->findElement(WebDriverBy::name('dob-day')));
-            $select->selectByValue('20');
+            $select->selectByValue($this->faker->numberBetween(1, 28));
             $select = new WebDriverSelect($this->webDriver->findElement(WebDriverBy::name('dob-month')));
-            $select->selectByValue('11');
+            $select->selectByValue($this->faker->numberBetween(1, 12));
             $select = new WebDriverSelect($this->webDriver->findElement(WebDriverBy::name('dob-year')));
-            $select->selectByValue('1985');
+            $select->selectByValue('1975');
         } catch (\Exception $exception) {
             unset($exception);
         }
@@ -110,7 +90,7 @@ class Missing extends AbstractStep
          */
         try {
             $name = $this->webDriver->findElement(WebDriverBy::name('cellphone'));
-            $name->clear()->sendKeys(self::PHONE);
+            $name->clear()->sendKeys($this->faker->phoneNumber);
         } catch (\Exception $exception) {
             unset($exception);
         }
@@ -120,7 +100,7 @@ class Missing extends AbstractStep
          */
         try {
             $name = $this->webDriver->findElement(WebDriverBy::name('address'));
-            $name->clear()->sendKeys(self::ADDRESS);
+            $name->clear()->sendKeys($this->faker->address. ' ' . $this->faker->city);
         } catch (\Exception $exception) {
             unset($exception);
         }
@@ -130,7 +110,7 @@ class Missing extends AbstractStep
          */
         try {
             $name = $this->webDriver->findElement(WebDriverBy::name('city'));
-            $name->clear()->sendKeys(self::CITY);
+            $name->clear()->sendKeys($this->faker->city);
         } catch (\Exception $exception) {
             unset($exception);
         }
@@ -140,7 +120,7 @@ class Missing extends AbstractStep
          */
         try {
             $name = $this->webDriver->findElement(WebDriverBy::name('zipcode'));
-            $name->clear()->sendKeys(self::ZIP_CODE);
+            $name->clear()->sendKeys($this->faker->postcode);
         } catch (\Exception $exception) {
             unset($exception);
         }
@@ -151,7 +131,7 @@ class Missing extends AbstractStep
         try {
             $name = $this->webDriver->findElement(WebDriverBy::name('password'));
             if (null === SeleniumHelper::$mobilePhone) {
-                $name->clear()->sendKeys(substr(self::PHONE, -4));
+                throw new \Exception('Please provide mobile phone for returning customer');
             } else {
                 $name->clear()->sendKeys(substr(SeleniumHelper::$mobilePhone, -4));
             }

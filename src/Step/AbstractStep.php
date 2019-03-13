@@ -5,6 +5,7 @@ namespace Pagantis\SeleniumFormUtils\Step;
 use Facebook\WebDriver\WebDriver;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverExpectedCondition;
+use Faker\Factory;
 
 /**
  * Class AbstractStep
@@ -19,6 +20,11 @@ abstract class AbstractStep implements StepInterface
     protected $webDriver;
 
     /**
+     * @var Factory
+     */
+    protected $faker;
+
+    /**
      * AbstractStep constructor.
      *
      * @param WebDriver $webDriver
@@ -26,6 +32,7 @@ abstract class AbstractStep implements StepInterface
     public function __construct(WebDriver $webDriver)
     {
         $this->webDriver = $webDriver;
+        $this->faker = Factory::create();
     }
 
     /**
