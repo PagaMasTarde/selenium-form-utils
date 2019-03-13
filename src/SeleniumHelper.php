@@ -1,16 +1,16 @@
 <?php
 
-namespace PagaMasTarde\SeleniumFormUtils;
+namespace Pagantis\SeleniumFormUtils;
 
 use Facebook\WebDriver\WebDriver;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverExpectedCondition;
-use PagaMasTarde\SeleniumFormUtils\Step\AbstractStep;
-use PagaMasTarde\SeleniumFormUtils\Step\Result\Status\Approved;
+use Pagantis\SeleniumFormUtils\Step\AbstractStep;
+use Pagantis\SeleniumFormUtils\Step\Result\Status\Approved;
 
 /**
  * Class SeleniumHelper
- * @package PagaMasTarde\SeleniumFormUtils
+ * @package Pagantis\SeleniumFormUtils
  */
 class SeleniumHelper
 {
@@ -72,7 +72,7 @@ class SeleniumHelper
         self::removeCookiesNotification();
         self::validateFormUrl();
 
-        self::$webDriver->wait()->until(
+        self::$webDriver->wait(5, 200)->until(
             WebDriverExpectedCondition::elementToBeClickable(
                 WebDriverBy::name('back_to_store_button')
             )
@@ -121,7 +121,7 @@ class SeleniumHelper
     protected static function getStepClass($formStep)
     {
         $formSteps = explode(DIRECTORY_SEPARATOR, $formStep);
-        $stepClass = 'PagaMasTarde\SeleniumFormUtils\Step';
+        $stepClass = 'Pagantis\SeleniumFormUtils\Step';
         foreach ($formSteps as $formStep) {
             if ($formStep !== '') {
                 $stepClass .= "\\".str_replace('-', '', ucwords($formStep, '-'));
@@ -139,7 +139,7 @@ class SeleniumHelper
     {
         $element = WebDriverBy::cssSelector(".Loading .is-disabled");
         $condition = WebDriverExpectedCondition::presenceOfElementLocated($element);
-        self::$webDriver->wait()->until($condition);
+        self::$webDriver->wait(5, 200)->until($condition);
     }
 
     /**
@@ -150,7 +150,7 @@ class SeleniumHelper
     {
         $element = WebDriverBy::id('sg-notification-global-trigger');
         $condition = WebDriverExpectedCondition::presenceOfElementLocated($element);
-        self::$webDriver->wait()->until($condition);
+        self::$webDriver->wait(5, 200)->until($condition);
         self::$webDriver->findElement($element)->click();
     }
 }

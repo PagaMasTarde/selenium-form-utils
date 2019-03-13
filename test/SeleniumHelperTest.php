@@ -1,12 +1,12 @@
 <?php
 
-namespace Test\PagaMasTarde\SeleniumFormUtils;
+namespace Test\Pagantis\SeleniumFormUtils;
 
-use PagaMasTarde\SeleniumFormUtils\SeleniumHelper;
+use Pagantis\SeleniumFormUtils\SeleniumHelper;
 
 /**
  * Class SeleniumHelperTest
- * @package Test\PagaMasTarde\SeleniumFormUtils
+ * @package Test\Pagantis\SeleniumFormUtils
  */
 class SeleniumHelperTest extends AbstractTest
 {
@@ -22,17 +22,7 @@ class SeleniumHelperTest extends AbstractTest
         // fails
         $from = parse_url($this->webDriver->getCurrentUrl(), PHP_URL_HOST);
         $to = parse_url($order->getConfiguration()->getUrls()->getCancel(), PHP_URL_HOST);
-        $this->assertContains($from, [$to]);
-        $this->webDriver->quit();
-    }
-
-    /**
-     * @throws \Exception
-     */
-    public function testFinishForm()
-    {
-        $this->webDriver->get($this->getFormUrl());
-        SeleniumHelper::finishForm($this->webDriver);
+        $this->assertContains($from, array($to));
         $this->webDriver->quit();
     }
 

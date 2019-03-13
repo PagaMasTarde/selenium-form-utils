@@ -1,0 +1,22 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/php:7.1-node-browsers
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Composer Install
+          command: composer install
+      - run:
+          name: Docker Composer Up
+          command: |
+            docker-compose up -d
+            docker cp ./ php:/var/www
+            sleep 5
+      - run:
+          name: PHP 7.1
+          command: docker-compose exec php php-7.1 vendor/bin/phpunit

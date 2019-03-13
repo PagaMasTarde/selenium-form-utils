@@ -1,15 +1,16 @@
 <?php
 
-namespace PagaMasTarde\SeleniumFormUtils\Step;
+namespace Pagantis\SeleniumFormUtils\Step;
 
 use Facebook\WebDriver\WebDriver;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverExpectedCondition;
+use Faker\Factory;
 
 /**
  * Class AbstractStep
  *
- * @package PagaMasTarde\SeleniumFormUtils\Step
+ * @package Pagantis\SeleniumFormUtils\Step
  */
 abstract class AbstractStep implements StepInterface
 {
@@ -19,6 +20,11 @@ abstract class AbstractStep implements StepInterface
     protected $webDriver;
 
     /**
+     * @var Factory
+     */
+    protected $faker;
+
+    /**
      * AbstractStep constructor.
      *
      * @param WebDriver $webDriver
@@ -26,6 +32,7 @@ abstract class AbstractStep implements StepInterface
     public function __construct(WebDriver $webDriver)
     {
         $this->webDriver = $webDriver;
+        $this->faker = Factory::create();
     }
 
     /**
@@ -39,7 +46,7 @@ abstract class AbstractStep implements StepInterface
     public function waitTobeClickAble(WebDriverBy $webDriverBy)
     {
         $condition = WebDriverExpectedCondition::elementToBeClickable($webDriverBy);
-        $this->webDriver->wait()->until($condition);
+        $this->webDriver->wait(5, 200)->until($condition);
 
         return $this->webDriver->findElement($webDriverBy);
     }
@@ -55,7 +62,7 @@ abstract class AbstractStep implements StepInterface
     public function waitTobeVisible(WebDriverBy $webDriverBy)
     {
         $condition = WebDriverExpectedCondition::visibilityOfElementLocated($webDriverBy);
-        $this->webDriver->wait()->until($condition);
+        $this->webDriver->wait(5, 200)->until($condition);
 
         return $this->webDriver->findElement($webDriverBy);
     }
@@ -69,7 +76,7 @@ abstract class AbstractStep implements StepInterface
     {
         $element = WebDriverBy::cssSelector(".Loading .is-disabled");
         $condition = WebDriverExpectedCondition::presenceOfElementLocated($element);
-        $this->webDriver->wait()->until($condition);
+        $this->webDriver->wait(5, 200)->until($condition);
 
         $path = parse_url($this->webDriver->getCurrentURL(), PHP_URL_PATH);
         $arguments = explode(DIRECTORY_SEPARATOR, $path);
@@ -92,7 +99,7 @@ abstract class AbstractStep implements StepInterface
     public function moveToIFrame($iFrameLocator)
     {
         $condition = WebDriverExpectedCondition::frameToBeAvailableAndSwitchToIt($iFrameLocator);
-        $this->webDriver->wait()->until($condition);
+        $this->webDriver->wait(5, 200)->until($condition);
     }
 
     /**

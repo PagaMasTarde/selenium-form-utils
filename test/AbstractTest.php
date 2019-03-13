@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\PagaMasTarde\SeleniumFormUtils;
+namespace Test\Pagantis\SeleniumFormUtils;
 
 use Facebook\WebDriver\Interactions\WebDriverActions;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
@@ -9,17 +9,19 @@ use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverElement;
 use Facebook\WebDriver\WebDriverExpectedCondition;
 use Faker\Factory;
-use PagaMasTarde\OrdersApiClient\Client;
-use PagaMasTarde\OrdersApiClient\Model\Order;
+use Pagantis\OrdersApiClient\Client;
+use Pagantis\OrdersApiClient\Model\Order;
 use PHPUnit\Framework\TestCase;
-use Test\PagaMasTarde\OrdersApiClient\ClientTest;
 
 /**
  * Class AbstractTest
- * @package Test\PagaMasTarde\SeleniumFormUtils
+ * @package Test\Pagantis\SeleniumFormUtils
  */
 abstract class AbstractTest extends TestCase
 {
+    const PUBLIC_KEY = 'tk_4954690ee76a4ff7875b93b4';
+    const PRIVATE_KEY = '4392a844f7904be3';
+
     /**
      * @var RemoteWebDriver
      */
@@ -31,10 +33,10 @@ abstract class AbstractTest extends TestCase
     protected function setUp()
     {
         $this->webDriver = RemoteWebDriver::create(
-            'http://localhost:4444/wd/hub',
+            'http://selenium:4444/wd/hub',
             DesiredCapabilities::chrome(),
-            60000,
-            60000
+            180000,
+            180000
         );
     }
 
@@ -96,7 +98,7 @@ abstract class AbstractTest extends TestCase
      */
     public function waitUntil(WebDriverExpectedCondition $condition)
     {
-        return $this->webDriver->wait()->until($condition);
+        return $this->webDriver->wait(5, 200)->until($condition);
     }
 
     /**
@@ -133,73 +135,23 @@ abstract class AbstractTest extends TestCase
     }
 
     /**
-     * @return string
-     *
+     * @return bool|false|Order|string
      * @throws \Httpful\Exception\ConnectionErrorException
-     * @throws \PagaMasTarde\OrdersApiClient\Exception\HttpException
-     * @throws \PagaMasTarde\OrdersApiClient\Exception\ValidationException
-     * @throws \ReflectionException
-     *
-     * @return string
-     */
-    protected function getFormUrl()
-    {
-        $orderTestClass = new ClientTest();
-        $order = $orderTestClass->testCreateOrder();
-
-        return $order->getActionUrls()->getForm();
-    }
-
-    /**
-     * @throws \Httpful\Exception\ConnectionErrorException
-     * @throws \PagaMasTarde\OrdersApiClient\Exception\HttpException
-     * @throws \PagaMasTarde\OrdersApiClient\Exception\ValidationException
-     *
-     * @return \PagaMasTarde\OrdersApiClient\Model\Order
+     * @throws \Pagantis\OrdersApiClient\Exception\ClientException
+     * @throws \Pagantis\OrdersApiClient\Exception\HttpException
      */
     protected function getBasicOrder()
     {
-        $orderTestClass = new ClientTest();
-        $orderApiConfiguration = $orderTestClass->getApiConfiguration();
         $orderClient = new Client(
-            $orderApiConfiguration->getPublicKey(),
-            $orderApiConfiguration->getPrivateKey()
+            self::PUBLIC_KEY,
+            self::PRIVATE_KEY
         );
         $faker = Factory::create();
 
-        $userAddress =  new Order\User\Address();
-        $userAddress
-            ->setZipCode($faker->postcode)
-            ->setFullName($faker->firstName)
-            ->setCountryCode('ES')
-            ->setCity($faker->city)
-            ->setAddress($faker->address)
-        ;
-
-        $orderShippingAddress =  new Order\User\Address();
-        $orderShippingAddress
-            ->setZipCode($faker->postcode)
-            ->setFullName($faker->firstName)
-            ->setCountryCode('ES')
-            ->setCity($faker->city)
-            ->setAddress($faker->address)
-        ;
-        $orderBillingAddress = new Order\User\Address();
-        $orderBillingAddress
-            ->setZipCode($faker->postcode)
-            ->setFullName($faker->firstName)
-            ->setCountryCode('ES')
-            ->setCity($faker->city)
-            ->setAddress($faker->address)
-        ;
-
         $orderUser = new Order\User();
         $orderUser
-            ->setAddress($userAddress)
-            ->setFullName($userAddress->getFullName())
+            ->setFullName($faker->firstName . ' ' . $faker->lastName)
             ->setEmail($faker->email)
-            ->setBillingAddress($orderBillingAddress)
-            ->setShippingAddress($orderShippingAddress)
         ;
 
         $details = new Order\ShoppingCart\Details();
@@ -234,14 +186,10 @@ abstract class AbstractTest extends TestCase
             ->setUrls($orderConfigurationUrls)
         ;
 
-        $metadata = new Order\Metadata();
-        $metadata->addMetadata('a', 'b');
-
         $order = new Order();
         $order
             ->setConfiguration($orderConfiguration)
             ->setShoppingCart($orderShoppingCart)
-            ->setMetadata($metadata)
             ->setUser($orderUser)
         ;
 

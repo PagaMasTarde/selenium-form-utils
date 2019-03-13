@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e23ac64b68275ca785b409511a967e3b",
+    "content-hash": "5c6291a390a7f0e1282625a76a9b9ada",
     "packages": [],
     "packages-dev": [
         {
@@ -247,17 +247,17 @@
             "time": "2015-06-04T13:11:29+00:00"
         },
         {
-            "name": "pagamastarde/orders-api-client",
-            "version": "v1.0.6",
+            "name": "pagantis/orders-api-client",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/PagaMasTarde/ordersApiClient.git",
-                "reference": "55eb038f7008f2c3ae6404a4ecbb1d5ac1b42fb3"
+                "url": "https://github.com/pagantis/orders-api-client.git",
+                "reference": "1dcfbd5440d6c8ccb5144052c28e4752ac28b37f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PagaMasTarde/ordersApiClient/zipball/55eb038f7008f2c3ae6404a4ecbb1d5ac1b42fb3",
-                "reference": "55eb038f7008f2c3ae6404a4ecbb1d5ac1b42fb3",
+                "url": "https://api.github.com/repos/pagantis/orders-api-client/zipball/1dcfbd5440d6c8ccb5144052c28e4752ac28b37f",
+                "reference": "1dcfbd5440d6c8ccb5144052c28e4752ac28b37f",
                 "shasum": ""
             },
             "require": {
@@ -272,7 +272,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "PagaMasTarde\\OrdersApiClient\\": "src/"
+                    "Pagantis\\OrdersApiClient\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -281,12 +281,12 @@
             ],
             "authors": [
                 {
-                    "name": "DigitalOrigin",
-                    "email": "cromero@digitalorigin.com"
+                    "name": "Pagantis",
+                    "email": "integration@pagantis.com"
                 }
             ],
-            "description": "PagaMasTarde Orders Api Client in PHP. Use the api with simple methods and using OOP.",
-            "time": "2018-08-01T11:03:59+00:00"
+            "description": "Pagantis Orders Api Client in PHP. Use the api with simple methods and using OOP.",
+            "time": "2019-03-13T10:36:25+00:00"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -774,6 +774,7 @@
                 "mock",
                 "xunit"
             ],
+            "abandoned": true,
             "time": "2015-10-02T06:51:40+00:00"
         },
         {
@@ -1214,25 +1215,28 @@
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.8.0",
+            "version": "v1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "7cc359f1b7b80fc25ed7796be7d96adc9b354bae"
+                "reference": "e3d826245268269cd66f8326bd8bc066687b4a19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/7cc359f1b7b80fc25ed7796be7d96adc9b354bae",
-                "reference": "7cc359f1b7b80fc25ed7796be7d96adc9b354bae",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/e3d826245268269cd66f8326bd8bc066687b4a19",
+                "reference": "e3d826245268269cd66f8326bd8bc066687b4a19",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
+            "suggest": {
+                "ext-ctype": "For best performance"
+            },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.8-dev"
+                    "dev-master": "1.9-dev"
                 }
             },
             "autoload": {
@@ -1254,7 +1258,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "BackEndTea@gmail.com"
+                    "email": "backendtea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
@@ -1265,20 +1269,20 @@
                 "polyfill",
                 "portable"
             ],
-            "time": "2018-04-30T19:57:29+00:00"
+            "time": "2018-08-06T14:22:27+00:00"
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.8.44",
+            "version": "v2.8.49",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "fbf876678e29dc634430dcf0096e216eb0004467"
+                "reference": "02c1859112aa779d9ab394ae4f3381911d84052b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/fbf876678e29dc634430dcf0096e216eb0004467",
-                "reference": "fbf876678e29dc634430dcf0096e216eb0004467",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/02c1859112aa779d9ab394ae4f3381911d84052b",
+                "reference": "02c1859112aa779d9ab394ae4f3381911d84052b",
                 "shasum": ""
             },
             "require": {
@@ -1315,7 +1319,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2018-07-26T09:03:18+00:00"
+            "time": "2018-11-11T11:18:13+00:00"
         }
     ],
     "aliases": [],

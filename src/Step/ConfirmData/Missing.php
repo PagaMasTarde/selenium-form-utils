@@ -1,15 +1,16 @@
 <?php
 
-namespace PagaMasTarde\SeleniumFormUtils\Step\ConfirmData;
+namespace Pagantis\SeleniumFormUtils\Step\ConfirmData;
 
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverSelect;
-use PagaMasTarde\SeleniumFormUtils\SeleniumHelper;
-use PagaMasTarde\SeleniumFormUtils\Step\AbstractStep;
+use Faker\Factory;
+use Pagantis\SeleniumFormUtils\SeleniumHelper;
+use Pagantis\SeleniumFormUtils\Step\AbstractStep;
 
 /**
  * Class Missing
- * @package PagaMasTarde\SeleniumFormUtils\Step\Result\Status
+ * @package Pagantis\SeleniumFormUtils\Step\Result\Status
  */
 class Missing extends AbstractStep
 {
@@ -19,34 +20,19 @@ class Missing extends AbstractStep
     const STEP = '/confirm-data/missing';
 
     /**
-     * Full name
+     * @return string
      */
-    const FULL_NAME = 'John Doe Martínez';
+    protected function getDNI()
+    {
+        $dni = '0000' . rand(pow(10, 4-1), pow(10, 4)-1);
+        $value = (int) ($dni / 23);
+        $value *= 23;
+        $value= $dni - $value;
+        $letter= "TRWAGMYFPDXBNJZSQVHLCKEO";
+        $dniLetter= substr($letter, $value, 1);
 
-    /**
-     * DNI
-     */
-    const DNI = '70831384D';
-
-    /**
-     * Phone
-     */
-    const PHONE = '600123123';
-
-    /**
-     * Address
-     */
-    const ADDRESS = 'Paseo Castellana, 95';
-
-    /**
-     * City
-     */
-    const CITY = 'Madrid';
-
-    /**
-     * ZipCode
-     */
-    const ZIP_CODE = '28046';
+        return $dni.$dniLetter;
+    }
 
     /**
      * Pass from confirm-data to next step in Application Form
@@ -66,7 +52,9 @@ class Missing extends AbstractStep
          */
         try {
             $name = $this->webDriver->findElement(WebDriverBy::name('name'));
-            $name->clear()->sendKeys(self::FULL_NAME);
+            $name->clear()->sendKeys(
+                $this->faker->firstName . ' ' . $this->faker->lastName
+            );
         } catch (\Exception $exception) {
             unset($exception);
         }
@@ -76,7 +64,7 @@ class Missing extends AbstractStep
          */
         try {
             $name = $this->webDriver->findElement(WebDriverBy::name('dni'));
-            $name->clear()->sendKeys(self::DNI);
+            $name->clear()->sendKeys($this->getDNI());
         } catch (\Exception $exception) {
             unset($exception);
         }
@@ -86,11 +74,11 @@ class Missing extends AbstractStep
          */
         try {
             $select = new WebDriverSelect($this->webDriver->findElement(WebDriverBy::name('dob-day')));
-            $select->selectByValue('20');
+            $select->selectByValue($this->faker->numberBetween(1, 28));
             $select = new WebDriverSelect($this->webDriver->findElement(WebDriverBy::name('dob-month')));
-            $select->selectByValue('11');
+            $select->selectByValue($this->faker->numberBetween(1, 12));
             $select = new WebDriverSelect($this->webDriver->findElement(WebDriverBy::name('dob-year')));
-            $select->selectByValue('1985');
+            $select->selectByValue('1975');
         } catch (\Exception $exception) {
             unset($exception);
         }
@@ -100,7 +88,7 @@ class Missing extends AbstractStep
          */
         try {
             $name = $this->webDriver->findElement(WebDriverBy::name('cellphone'));
-            $name->clear()->sendKeys(self::PHONE);
+            $name->clear()->sendKeys('6' . $this->faker->randomNumber(8));
         } catch (\Exception $exception) {
             unset($exception);
         }
@@ -110,7 +98,7 @@ class Missing extends AbstractStep
          */
         try {
             $name = $this->webDriver->findElement(WebDriverBy::name('address'));
-            $name->clear()->sendKeys(self::ADDRESS);
+            $name->clear()->sendKeys($this->faker->address. ' ' . $this->faker->city);
         } catch (\Exception $exception) {
             unset($exception);
         }
@@ -120,7 +108,7 @@ class Missing extends AbstractStep
          */
         try {
             $name = $this->webDriver->findElement(WebDriverBy::name('city'));
-            $name->clear()->sendKeys(self::CITY);
+            $name->clear()->sendKeys($this->faker->city);
         } catch (\Exception $exception) {
             unset($exception);
         }
@@ -130,7 +118,7 @@ class Missing extends AbstractStep
          */
         try {
             $name = $this->webDriver->findElement(WebDriverBy::name('zipcode'));
-            $name->clear()->sendKeys(self::ZIP_CODE);
+            $name->clear()->sendKeys($this->faker->postcode);
         } catch (\Exception $exception) {
             unset($exception);
         }
@@ -141,7 +129,7 @@ class Missing extends AbstractStep
         try {
             $name = $this->webDriver->findElement(WebDriverBy::name('password'));
             if (null === SeleniumHelper::$mobilePhone) {
-                $name->clear()->sendKeys(substr(self::PHONE, -4));
+                throw new \Exception('Please provide mobile phone for returning customer');
             } else {
                 $name->clear()->sendKeys(substr(SeleniumHelper::$mobilePhone, -4));
             }
