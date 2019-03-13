@@ -39,6 +39,11 @@ the ordersApiClient will also available.
 SeleniumHelper::finishForm($this->webDriver);
 
 //The method will end once the form is approved, so the current URL will be OK_URL of the order
+//Optionally you can also send the mobilePhone if the user is returning
+
+SeleniumHelper::finishForm($this->webDriver, '600123123');
+
+
 ```
 
 You can also check the cancel action automated
