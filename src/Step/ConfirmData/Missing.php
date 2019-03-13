@@ -53,9 +53,7 @@ class Missing extends AbstractStep
         try {
             $name = $this->webDriver->findElement(WebDriverBy::name('name'));
             $name->clear()->sendKeys(
-                $this->faker->firstName . ' ' .
-                $this->faker->lastName . ' ' .
-                $this->faker->lastName
+                $this->faker->firstName . ' ' . $this->faker->lastName
             );
         } catch (\Exception $exception) {
             unset($exception);
@@ -90,7 +88,7 @@ class Missing extends AbstractStep
          */
         try {
             $name = $this->webDriver->findElement(WebDriverBy::name('cellphone'));
-            $name->clear()->sendKeys($this->faker->phoneNumber);
+            $name->clear()->sendKeys('6' . $this->faker->randomNumber(8));
         } catch (\Exception $exception) {
             unset($exception);
         }

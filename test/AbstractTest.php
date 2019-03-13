@@ -98,7 +98,7 @@ abstract class AbstractTest extends TestCase
      */
     public function waitUntil(WebDriverExpectedCondition $condition)
     {
-        return $this->webDriver->wait(180, 2000)->until($condition);
+        return $this->webDriver->wait(5, 200)->until($condition);
     }
 
     /**

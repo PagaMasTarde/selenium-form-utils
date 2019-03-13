@@ -38,7 +38,7 @@ class Application extends AbstractStep
          */
         try {
             $name = $this->webDriver->findElement(WebDriverBy::name('name'));
-            $name->clear()->sendKeys(Missing::FULL_NAME);
+            $name->clear()->sendKeys($this->faker->name . ' ' . $this->faker->lastName);
         } catch (\Exception $exception) {
             unset($exception);
         }
