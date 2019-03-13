@@ -9,33 +9,14 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
-          name: Configure Dependencies
-          command: |
-            sudo apt install -y libsqlite3-dev zlib1g-dev
-            sudo docker-php-ext-install zip
-            sudo composer self-update
-            composer update
+          name: Composer Install
+          command: composer install
       - run:
-          name: Docker Up
+          name: Docker Composer Up
           command: |
             docker-compose up -d
             docker cp ./ php:/var/www
-            sleep 10
-      - run:
-          name: PHP 7.2
-          command: docker-compose exec php php-7.2 vendor/bin/phpunit
-      - run:
-          name: PHP 7.1
-          command: docker-compose exec php php-7.1 vendor/bin/phpunit
-      - run:
-          name: PHP 7.0
-          command: docker-compose exec php php-7.0 vendor/bin/phpunit
+            sleep 5
       - run:
           name: PHP 5.6
           command: docker-compose exec php php-5.6 vendor/bin/phpunit
-      - run:
-          name: PHP 5.4
-          command: docker-compose exec php php-5.4 vendor/bin/phpunit
-      - run:
-          name: PHP 5.3
-          command: docker-compose exec php php-5.3 vendor/bin/phpunit
