@@ -1,13 +1,13 @@
 <?php
 
-namespace PagaMasTarde\SeleniumFormUtils\Step;
+namespace Pagantis\SeleniumFormUtils\Step;
 
 use Facebook\WebDriver\WebDriverBy;
 
 /**
  * Class Returning
  *
- * @package PagaMasTarde\SeleniumFormUtils\Step
+ * @package Pagantis\SeleniumFormUtils\Step
  */
 class Returning extends AbstractStep
 {

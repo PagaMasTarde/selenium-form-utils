@@ -1,16 +1,16 @@
 <?php
 
-namespace PagaMasTarde\SeleniumFormUtils;
+namespace Pagantis\SeleniumFormUtils;
 
 use Facebook\WebDriver\WebDriver;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverExpectedCondition;
-use PagaMasTarde\SeleniumFormUtils\Step\AbstractStep;
-use PagaMasTarde\SeleniumFormUtils\Step\Result\Status\Approved;
+use Pagantis\SeleniumFormUtils\Step\AbstractStep;
+use Pagantis\SeleniumFormUtils\Step\Result\Status\Approved;
 
 /**
  * Class SeleniumHelper
- * @package PagaMasTarde\SeleniumFormUtils
+ * @package Pagantis\SeleniumFormUtils
  */
 class SeleniumHelper
 {
@@ -121,7 +121,7 @@ class SeleniumHelper
     protected static function getStepClass($formStep)
     {
         $formSteps = explode(DIRECTORY_SEPARATOR, $formStep);
-        $stepClass = 'PagaMasTarde\SeleniumFormUtils\Step';
+        $stepClass = 'Pagantis\SeleniumFormUtils\Step';
         foreach ($formSteps as $formStep) {
             if ($formStep !== '') {
                 $stepClass .= "\\".str_replace('-', '', ucwords($formStep, '-'));

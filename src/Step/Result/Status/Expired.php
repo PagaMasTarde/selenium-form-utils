@@ -1,12 +1,12 @@
 <?php
 
-namespace PagaMasTarde\SeleniumFormUtils\Step\Result\Status;
+namespace Pagantis\SeleniumFormUtils\Step\Result\Status;
 
-use PagaMasTarde\SeleniumFormUtils\Step\AbstractStep;
+use Pagantis\SeleniumFormUtils\Step\AbstractStep;
 
 /**
  * Class Expired
- * @package PagaMasTarde\SeleniumFormUtils\Step\Result\Status
+ * @package Pagantis\SeleniumFormUtils\Step\Result\Status
  */
 class Expired extends AbstractStep
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace PagaMasTarde\SeleniumFormUtils\Step\Returning;
+namespace Pagantis\SeleniumFormUtils\Step\Returning;
 
 use Facebook\WebDriver\WebDriverBy;
-use PagaMasTarde\SeleniumFormUtils\Step\AbstractStep;
+use Pagantis\SeleniumFormUtils\Step\AbstractStep;
 
 /**
  * Class EndYourPurchase
  *
- * @package PagaMasTarde\SeleniumFormUtils\Step
+ * @package Pagantis\SeleniumFormUtils\Step
  */
 class EndYourPurchase extends AbstractStep
 {

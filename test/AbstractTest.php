@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\PagaMasTarde\SeleniumFormUtils;
+namespace Test\Pagantis\SeleniumFormUtils;
 
 use Facebook\WebDriver\Interactions\WebDriverActions;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
@@ -9,14 +9,14 @@ use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverElement;
 use Facebook\WebDriver\WebDriverExpectedCondition;
 use Faker\Factory;
-use PagaMasTarde\OrdersApiClient\Client;
-use PagaMasTarde\OrdersApiClient\Model\Order;
+use Pagantis\OrdersApiClient\Client;
+use Pagantis\OrdersApiClient\Model\Order;
 use PHPUnit\Framework\TestCase;
-use Test\PagaMasTarde\OrdersApiClient\ClientTest;
+use Test\Pagantis\OrdersApiClient\ClientTest;
 
 /**
  * Class AbstractTest
- * @package Test\PagaMasTarde\SeleniumFormUtils
+ * @package Test\Pagantis\SeleniumFormUtils
  */
 abstract class AbstractTest extends TestCase
 {
@@ -136,8 +136,8 @@ abstract class AbstractTest extends TestCase
      * @return string
      *
      * @throws \Httpful\Exception\ConnectionErrorException
-     * @throws \PagaMasTarde\OrdersApiClient\Exception\HttpException
-     * @throws \PagaMasTarde\OrdersApiClient\Exception\ValidationException
+     * @throws \Pagantis\OrdersApiClient\Exception\HttpException
+     * @throws \Pagantis\OrdersApiClient\Exception\ValidationException
      * @throws \ReflectionException
      *
      * @return string
@@ -152,10 +152,10 @@ abstract class AbstractTest extends TestCase
 
     /**
      * @throws \Httpful\Exception\ConnectionErrorException
-     * @throws \PagaMasTarde\OrdersApiClient\Exception\HttpException
-     * @throws \PagaMasTarde\OrdersApiClient\Exception\ValidationException
+     * @throws \Pagantis\OrdersApiClient\Exception\HttpException
+     * @throws \Pagantis\OrdersApiClient\Exception\ValidationException
      *
-     * @return \PagaMasTarde\OrdersApiClient\Model\Order
+     * @return \Pagantis\OrdersApiClient\Model\Order
      */
     protected function getBasicOrder()
     {

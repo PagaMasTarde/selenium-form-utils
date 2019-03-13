@@ -1,10 +1,10 @@
 <?php
 
-namespace PagaMasTarde\SeleniumFormUtils\Step;
+namespace Pagantis\SeleniumFormUtils\Step;
 
 /**
  * Interface StepInterface
- * @package PagaMasTarde\SeleniumFormUtils\Step
+ * @package Pagantis\SeleniumFormUtils\Step
  */
 interface StepInterface
 {

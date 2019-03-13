@@ -1,6 +1,6 @@
 <?php
 
-namespace PagaMasTarde\SeleniumFormUtils\Step;
+namespace Pagantis\SeleniumFormUtils\Step;
 
 use Facebook\WebDriver\WebDriver;
 use Facebook\WebDriver\WebDriverBy;
@@ -9,7 +9,7 @@ use Facebook\WebDriver\WebDriverExpectedCondition;
 /**
  * Class AbstractStep
  *
- * @package PagaMasTarde\SeleniumFormUtils\Step
+ * @package Pagantis\SeleniumFormUtils\Step
  */
 abstract class AbstractStep implements StepInterface
 {

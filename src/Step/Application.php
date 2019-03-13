@@ -1,14 +1,14 @@
 <?php
 
-namespace PagaMasTarde\SeleniumFormUtils\Step;
+namespace Pagantis\SeleniumFormUtils\Step;
 
 use Facebook\WebDriver\WebDriverBy;
-use PagaMasTarde\SeleniumFormUtils\Step\ConfirmData\Missing;
+use Pagantis\SeleniumFormUtils\Step\ConfirmData\Missing;
 
 /**
  * Class Application
  *
- * @package PagaMasTarde\SeleniumFormUtils\Step
+ * @package Pagantis\SeleniumFormUtils\Step
  */
 class Application extends AbstractStep
 {

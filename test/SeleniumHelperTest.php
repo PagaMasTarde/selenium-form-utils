@@ -1,12 +1,12 @@
 <?php
 
-namespace Test\PagaMasTarde\SeleniumFormUtils;
+namespace Test\Pagantis\SeleniumFormUtils;
 
-use PagaMasTarde\SeleniumFormUtils\SeleniumHelper;
+use Pagantis\SeleniumFormUtils\SeleniumHelper;
 
 /**
  * Class SeleniumHelperTest
- * @package Test\PagaMasTarde\SeleniumFormUtils
+ * @package Test\Pagantis\SeleniumFormUtils
  */
 class SeleniumHelperTest extends AbstractTest
 {
