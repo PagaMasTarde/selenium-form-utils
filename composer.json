@@ -18,12 +18,6 @@
       "Pagantis\\SeleniumFormUtils\\": "src/"
     }
   },
-  "autoload-dev": {
-    "psr-4": {
-      "Test\\Pagantis\\SeleniumFormUtils\\": "test",
-      "Test\\Pagantis\\OrdersApiClient\\": "vendor/pagantis/orders-api-client/test"
-    }
-  },
   "authors": [
     {
       "name": "Pagantis",

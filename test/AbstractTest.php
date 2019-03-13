@@ -12,7 +12,6 @@ use Faker\Factory;
 use Pagantis\OrdersApiClient\Client;
 use Pagantis\OrdersApiClient\Model\Order;
 use PHPUnit\Framework\TestCase;
-use Test\Pagantis\OrdersApiClient\ClientTest;
 
 /**
  * Class AbstractTest
@@ -20,6 +19,9 @@ use Test\Pagantis\OrdersApiClient\ClientTest;
  */
 abstract class AbstractTest extends TestCase
 {
+    const PUBLIC_KEY = 'tk_4954690ee76a4ff7875b93b4';
+    const PRIVATE_KEY = '4392a844f7904be3';
+
     /**
      * @var RemoteWebDriver
      */
@@ -31,7 +33,7 @@ abstract class AbstractTest extends TestCase
     protected function setUp()
     {
         $this->webDriver = RemoteWebDriver::create(
-            'http://selenium:4444/wd/hub',
+            'http://localhost:4444/wd/hub',
             DesiredCapabilities::chrome(),
             60000,
             60000
@@ -133,37 +135,16 @@ abstract class AbstractTest extends TestCase
     }
 
     /**
-     * @return string
-     *
+     * @return bool|false|Order|string
      * @throws \Httpful\Exception\ConnectionErrorException
+     * @throws \Pagantis\OrdersApiClient\Exception\ClientException
      * @throws \Pagantis\OrdersApiClient\Exception\HttpException
-     * @throws \Pagantis\OrdersApiClient\Exception\ValidationException
-     * @throws \ReflectionException
-     *
-     * @return string
-     */
-    protected function getFormUrl()
-    {
-        $orderTestClass = new ClientTest();
-        $order = $orderTestClass->testCreateOrder();
-
-        return $order->getActionUrls()->getForm();
-    }
-
-    /**
-     * @throws \Httpful\Exception\ConnectionErrorException
-     * @throws \Pagantis\OrdersApiClient\Exception\HttpException
-     * @throws \Pagantis\OrdersApiClient\Exception\ValidationException
-     *
-     * @return \Pagantis\OrdersApiClient\Model\Order
      */
     protected function getBasicOrder()
     {
-        $orderTestClass = new ClientTest();
-        $orderApiConfiguration = $orderTestClass->getApiConfiguration();
         $orderClient = new Client(
-            $orderApiConfiguration->getPublicKey(),
-            $orderApiConfiguration->getPrivateKey()
+            self::PUBLIC_KEY,
+            self::PRIVATE_KEY
         );
         $faker = Factory::create();
 

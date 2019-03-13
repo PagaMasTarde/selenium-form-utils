@@ -24,11 +24,6 @@ class Missing extends AbstractStep
     const FULL_NAME = 'John Doe Martínez';
 
     /**
-     * DNI
-     */
-    const DNI = '70831384D';
-
-    /**
      * Phone
      */
     const PHONE = '600123123';
@@ -47,6 +42,21 @@ class Missing extends AbstractStep
      * ZipCode
      */
     const ZIP_CODE = '28046';
+
+    /**
+     * @return string
+     */
+    protected function getDNI()
+    {
+        $dni = '0000' . rand(pow(10, 4-1), pow(10, 4)-1);
+        $value = (int) ($dni / 23);
+        $value *= 23;
+        $value= $dni - $value;
+        $letter= "TRWAGMYFPDXBNJZSQVHLCKEO";
+        $dniLetter= substr($letter, $value, 1);
+
+        return $dni.$dniLetter;
+    }
 
     /**
      * Pass from confirm-data to next step in Application Form
@@ -76,7 +86,7 @@ class Missing extends AbstractStep
          */
         try {
             $name = $this->webDriver->findElement(WebDriverBy::name('dni'));
-            $name->clear()->sendKeys(self::DNI);
+            $name->clear()->sendKeys($this->getDNI());
         } catch (\Exception $exception) {
             unset($exception);
         }

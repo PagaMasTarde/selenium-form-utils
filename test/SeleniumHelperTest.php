@@ -29,16 +29,6 @@ class SeleniumHelperTest extends AbstractTest
     /**
      * @throws \Exception
      */
-    public function testFinishForm()
-    {
-        $this->webDriver->get($this->getFormUrl());
-        SeleniumHelper::finishForm($this->webDriver);
-        $this->webDriver->quit();
-    }
-
-    /**
-     * @throws \Exception
-     */
     public function testBasicOrderFinishForm()
     {
         $this->webDriver->get($this->getBasicOrder()->getActionUrls()->getForm());
