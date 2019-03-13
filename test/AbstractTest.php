@@ -35,8 +35,8 @@ abstract class AbstractTest extends TestCase
         $this->webDriver = RemoteWebDriver::create(
             'http://selenium:4444/wd/hub',
             DesiredCapabilities::chrome(),
-            60000,
-            60000
+            180000,
+            180000
         );
     }
 
@@ -98,7 +98,7 @@ abstract class AbstractTest extends TestCase
      */
     public function waitUntil(WebDriverExpectedCondition $condition)
     {
-        return $this->webDriver->wait()->until($condition);
+        return $this->webDriver->wait(180, 2000)->until($condition);
     }
 
     /**
