@@ -5,9 +5,9 @@ CircleCI: [![CircleCI](https://circleci.com/gh/pagantis/selenium-form-utils/tree
 
 [![Latest Stable Version](https://poser.pugx.org/pagantis/selenium-form-utils/v/stable)](https://packagist.org/packages/pagantis/selenium-form-utils)
 [![composer.lock](https://poser.pugx.org/pagantis/selenium-form-utils/composerlock)](https://packagist.org/packages/pagantis/selenium-form-utils)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/pagantis/selenium-form-utils/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/pagantisTarde/selenium-form-utils/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/pagantis/selenium-form-utils/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/pagantis/selenium-form-utils/?branch=master)
 
-Selenium Form Utils will help you when developing integration test of Pagantis. The utils will go pass paga+tarde form to ensure you can test the Notification and the Redirection.
+Selenium Form Utils will help you when developing integration test of Pagantis. The utils will go pass Pagantis form to ensure you can test the Notification and the Redirection.
 Be sure that KO and OK controllers work. You can automate your testing using travis-ci or circle-ci.
 
 ## How to use
