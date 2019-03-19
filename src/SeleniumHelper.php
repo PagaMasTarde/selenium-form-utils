@@ -72,7 +72,7 @@ class SeleniumHelper
         self::removeCookiesNotification();
         self::validateFormUrl();
 
-        self::$webDriver->wait(5, 200)->until(
+        self::$webDriver->wait(90, 1500)->until(
             WebDriverExpectedCondition::elementToBeClickable(
                 WebDriverBy::name('back_to_store_button')
             )
@@ -139,7 +139,7 @@ class SeleniumHelper
     {
         $element = WebDriverBy::cssSelector(".Loading .is-disabled");
         $condition = WebDriverExpectedCondition::presenceOfElementLocated($element);
-        self::$webDriver->wait(5, 200)->until($condition);
+        self::$webDriver->wait(90, 1500)->until($condition);
     }
 
     /**
@@ -150,7 +150,7 @@ class SeleniumHelper
     {
         $element = WebDriverBy::id('sg-notification-global-trigger');
         $condition = WebDriverExpectedCondition::presenceOfElementLocated($element);
-        self::$webDriver->wait(5, 200)->until($condition);
+        self::$webDriver->wait(90, 1500)->until($condition);
         self::$webDriver->findElement($element)->click();
     }
 }

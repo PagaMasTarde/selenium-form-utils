@@ -46,7 +46,7 @@ abstract class AbstractStep implements StepInterface
     public function waitTobeClickAble(WebDriverBy $webDriverBy)
     {
         $condition = WebDriverExpectedCondition::elementToBeClickable($webDriverBy);
-        $this->webDriver->wait(5, 200)->until($condition);
+        $this->webDriver->wait(90, 1500)->until($condition);
 
         return $this->webDriver->findElement($webDriverBy);
     }
@@ -62,7 +62,7 @@ abstract class AbstractStep implements StepInterface
     public function waitTobeVisible(WebDriverBy $webDriverBy)
     {
         $condition = WebDriverExpectedCondition::visibilityOfElementLocated($webDriverBy);
-        $this->webDriver->wait(5, 200)->until($condition);
+        $this->webDriver->wait(90, 1500)->until($condition);
 
         return $this->webDriver->findElement($webDriverBy);
     }
@@ -76,7 +76,7 @@ abstract class AbstractStep implements StepInterface
     {
         $element = WebDriverBy::cssSelector(".Loading .is-disabled");
         $condition = WebDriverExpectedCondition::presenceOfElementLocated($element);
-        $this->webDriver->wait(5, 200)->until($condition);
+        $this->webDriver->wait(90, 1500)->until($condition);
 
         $path = parse_url($this->webDriver->getCurrentURL(), PHP_URL_PATH);
         $arguments = explode(DIRECTORY_SEPARATOR, $path);
@@ -99,7 +99,7 @@ abstract class AbstractStep implements StepInterface
     public function moveToIFrame($iFrameLocator)
     {
         $condition = WebDriverExpectedCondition::frameToBeAvailableAndSwitchToIt($iFrameLocator);
-        $this->webDriver->wait(5, 200)->until($condition);
+        $this->webDriver->wait(90, 1500)->until($condition);
     }
 
     /**
