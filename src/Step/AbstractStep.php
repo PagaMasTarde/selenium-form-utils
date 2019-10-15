@@ -6,6 +6,7 @@ use Facebook\WebDriver\WebDriver;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverExpectedCondition;
 use Faker\Factory;
+use Pagantis\SeleniumFormUtils\SeleniumHelper;
 
 /**
  * Class AbstractStep
@@ -74,19 +75,13 @@ abstract class AbstractStep implements StepInterface
      */
     public function validateStep($step)
     {
-        $element = WebDriverBy::cssSelector(".Loading .is-disabled");
-        $condition = WebDriverExpectedCondition::presenceOfElementLocated($element);
-        $this->webDriver->wait(90, 1500)->until($condition);
+        $currentStep = SeleniumHelper::$arraySteps[
+            $this->webDriver->findElement(WebDriverBy::cssSelector(".ProgressBar progress"))
+                ->getAttribute("value")
+        ];
 
-        $path = parse_url($this->webDriver->getCurrentURL(), PHP_URL_PATH);
-        $arguments = explode(DIRECTORY_SEPARATOR, $path);
-        $tempStep = '';
-        for ($i = 2; $i < count($arguments); $i++) {
-            $tempStep .= DIRECTORY_SEPARATOR.$arguments[$i];
-        }
-
-        if ($step !== $tempStep) {
-            throw new \Exception('Wrong step: ' . $tempStep);
+        if ($step !== $currentStep) {
+            throw new \Exception('Wrong step: ' . $arraySteps[$step]);
         }
     }
 

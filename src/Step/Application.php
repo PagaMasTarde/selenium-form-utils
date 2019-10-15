@@ -3,7 +3,6 @@
 namespace Pagantis\SeleniumFormUtils\Step;
 
 use Facebook\WebDriver\WebDriverBy;
-use Pagantis\SeleniumFormUtils\Step\ConfirmData\Missing;
 
 /**
  * Class Application
@@ -15,11 +14,11 @@ class Application extends AbstractStep
     /**
      * Handler step
      */
-    const STEP = '/application';
+    const STEP = 'Application';
 
-    const CARD_NUMBER = '4507670001000009';
+    const CARD_NUMBER = '5555555555554444';
 
-    const CARD_CVC = '989';
+    const CARD_CVC = '123';
 
     const CARD_HOLDER = 'John Doe';
 
@@ -31,43 +30,32 @@ class Application extends AbstractStep
     public function run()
     {
         $this->validateStep(self::STEP);
-        //Click on confirm:
-
-        /*
-         * Optional Full Name:
-         */
-        try {
-            $name = $this->webDriver->findElement(WebDriverBy::name('name'));
-            $name->clear()->sendKeys($this->faker->name . ' ' . $this->faker->lastName);
-        } catch (\Exception $exception) {
-            unset($exception);
-        }
 
         try {
-            $this->moveToIFrame('hosted-field-number');
-            $this->waitTobeVisible(WebDriverBy::name('credit-card-number'));
-            $creditCardNumber = $this->webDriver->findElement(WebDriverBy::name('credit-card-number'));
+            $iframe = $this->webDriver->findElement(WebDriverBy::tagName('iframe'));
+            $iFrameOneId = $iframe->getAttribute('name');
+            $iFrameTwoId = 'spreedly-cvv-frame-'.end(explode('-', $iFrameOneId));
+
+            $this->moveToIFrame($iFrameOneId);
+            $this->waitTobeVisible(WebDriverBy::id('card_number'));
+            $creditCardNumber = $this->webDriver->findElement(WebDriverBy::name('card_number'));
             $creditCardNumber->clear()->sendKeys(self::CARD_NUMBER);
             $this->moveToParent();
-            $this->moveToIFrame('hosted-field-name');
-            $cardHolder = $this->webDriver->findElement(WebDriverBy::name('name'));
-            $cardHolder->clear()->sendKeys(self::CARD_HOLDER);
-            $this->moveToParent();
-            $this->moveToIFrame('hosted-field-cvv');
-            $cvv = $this->webDriver->findElement(WebDriverBy::name('cvv'));
+
+            $fullName = $this->webDriver->findElement(WebDriverBy::name('fullName'));
+            $fullName->clear()->sendKeys(self::CARD_HOLDER);
+            $expirationDate = $this->webDriver->findElement(WebDriverBy::name('expirationDate'));
+            $expirationDate->clear()->sendKeys('1221');
+
+            $this->moveToIFrame($iFrameTwoId);
+            $cvv = $this->webDriver->findElement(WebDriverBy::id('cvv'));
             $cvv->clear()->sendKeys(self::CARD_CVC);
             $this->moveToParent();
-            $this->moveToIFrame('hosted-field-expirationDate');
-            $expiration = $this->webDriver->findElement(WebDriverBy::name('expiration'));
-            $expiration->clear()->sendKeys('12'. date('y'));
-            $this->moveToParent();
-            $acceptedTerms = $this->webDriver->findElement(WebDriverBy::className('Form-checkboxSkin'));
-            $acceptedTerms->click();
+
+            $formContinue = $this->webDriver->findElement(WebDriverBy::name('continue_button'));
+            $formContinue->click();
         } catch (\Exception $exception) {
             unset($exception);
         }
-
-        $formContinue = $this->webDriver->findElement(WebDriverBy::name('form-continue'));
-        $formContinue->click();
     }
 }

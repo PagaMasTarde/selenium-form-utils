@@ -31,7 +31,8 @@ class SeleniumHelperTest extends AbstractTest
      */
     public function testBasicOrderFinishForm()
     {
-        $this->webDriver->get($this->getBasicOrder()->getActionUrls()->getForm());
+        $url = $this->getBasicOrder()->getActionUrls()->getForm();
+        $this->webDriver->get($url);
         SeleniumHelper::finishForm($this->webDriver);
         $this->webDriver->quit();
     }

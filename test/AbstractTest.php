@@ -35,8 +35,8 @@ abstract class AbstractTest extends TestCase
         $this->webDriver = RemoteWebDriver::create(
             'http://selenium:4444/wd/hub',
             DesiredCapabilities::chrome(),
-            150000,
-            150000
+            15000,
+            15000
         );
     }
 

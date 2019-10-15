@@ -14,7 +14,7 @@ class ConfirmData extends AbstractStep
     /**
      * Handler step
      */
-    const STEP = '/confirm-data';
+    const STEP = 'ConfirmData';
 
     /**
      * Pass from confirm-data to next step in Application Form
@@ -25,9 +25,9 @@ class ConfirmData extends AbstractStep
     {
         $this->validateStep(self::STEP);
         //Click on confirm:
-        $confirmCheckbox = $this->webDriver->findElement(WebDriverBy::className('Form-checkboxSkin'));
+        $confirmCheckbox = $this->webDriver->findElement(WebDriverBy::className('checkmark'));
         $confirmCheckbox->click();
-        $formContinue = $this->webDriver->findElement(WebDriverBy::name('form-continue'));
+        $formContinue = $this->webDriver->findElement(WebDriverBy::name('continue_button'));
         $formContinue->click();
     }
 }
