@@ -6,7 +6,7 @@ use Facebook\WebDriver\WebDriver;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverExpectedCondition;
 use Pagantis\SeleniumFormUtils\Step\AbstractStep;
-use Pagantis\SeleniumFormUtils\Step\Result\Status\Approved;
+use Pagantis\SeleniumFormUtils\Step\Rejected;
 
 /**
  * Class SeleniumHelper
@@ -17,41 +17,49 @@ class SeleniumHelper
     /**
      * Form base domain, initial status to verify before start testing
      */
-    const FORM_BASE_URL = 'https://form.pagamastarde.com';
+    const FORM_BASE_URL = 'https://form.sbx.pagantis.com';
 
     /**
      * @var WebDriver
      */
-    static protected $webDriver;
+    protected static $webDriver;
 
     /**
      * @var string $mobilePhone needed to identify returning users
      */
-    static public $mobilePhone = null;
+    public static $mobilePhone = null;
+
+    /**
+     * @var array $arraySteps
+     */
+    public static $arraySteps = array (
+        '25' => 'ConfirmData',
+        '50' => 'Missing',
+        '75' => 'Application',
+        '100' => 'Rejected',
+    );
 
     /**
      * @param WebDriver $webDriver
-     * @param string $mobilePhone
+     * @param bool $rejected
      *
      * @throws \Exception
      */
-    public static function finishForm(WebDriver $webDriver, $mobilePhone = null)
+    public static function finishForm(WebDriver $webDriver, $rejected = false)
     {
         self::$webDriver = $webDriver;
-        self::$mobilePhone = $mobilePhone;
         self::waitToLoad();
-        self::removeCookiesNotification();
         self::validateFormUrl();
-        $maxSteps = 15;
+        $maxSteps = 20;
         do {
+            self::waitToLoad();
             $formStep = self::getFormStep();
-            $formStepClass = self::getStepClass($formStep);
+            $formStepClass = "\\".self::getStepClass($formStep);
             /** @var AbstractStep $stepClass */
             $stepClass = new $formStepClass(self::$webDriver);
-            $stepClass->run();
-            self::waitToLoad();
+            $continue = $stepClass->run($rejected);
             --$maxSteps;
-        } while ($formStep !== Approved::STEP && $maxSteps > 0);
+        } while ($continue && $formStep !== Rejected::STEP && $maxSteps > 0);
 
         if ($maxSteps <= 0) {
             throw new \Exception('Error while finishing form, step: ' . $formStep);
@@ -60,16 +68,13 @@ class SeleniumHelper
 
     /**
      * @param WebDriver $webDriver
-     * @param string $mobilePhone
      *
      * @throws \Exception
      */
-    public static function cancelForm(WebDriver $webDriver, $mobilePhone = null)
+    public static function cancelForm(WebDriver $webDriver)
     {
         self::$webDriver = $webDriver;
-        self::$mobilePhone = $mobilePhone;
         self::waitToLoad();
-        self::removeCookiesNotification();
         self::validateFormUrl();
 
         self::$webDriver->wait(90, 1500)->until(
@@ -94,20 +99,17 @@ class SeleniumHelper
     }
 
     /**
-     * Get the step of the form from the URL: '/result/status/approved'
+     * Get the step of the breadcrumb progress bar
      *
      * @return string
      */
     protected static function getFormStep()
     {
-        $path = parse_url(self::$webDriver->getCurrentURL(), PHP_URL_PATH);
-        $arguments = explode(DIRECTORY_SEPARATOR, $path);
-        $step = '';
-        for ($i = 2; $i < count($arguments); $i++) {
-            $step .= DIRECTORY_SEPARATOR.$arguments[$i];
-        }
 
-        return $step;
+        return self::$arraySteps[
+            self::$webDriver->findElement(WebDriverBy::cssSelector(".ProgressBar progress"))
+            ->getAttribute("value")
+        ];
     }
 
     /**
@@ -137,20 +139,8 @@ class SeleniumHelper
      */
     public static function waitToLoad()
     {
-        $element = WebDriverBy::cssSelector(".Loading .is-disabled");
+        $element = WebDriverBy::cssSelector(".MainContainer");
         $condition = WebDriverExpectedCondition::presenceOfElementLocated($element);
         self::$webDriver->wait(90, 1500)->until($condition);
-    }
-
-    /**
-     * @throws \Facebook\WebDriver\Exception\NoSuchElementException
-     * @throws \Facebook\WebDriver\Exception\TimeOutException
-     */
-    public static function removeCookiesNotification()
-    {
-        $element = WebDriverBy::id('sg-notification-global-trigger');
-        $condition = WebDriverExpectedCondition::presenceOfElementLocated($element);
-        self::$webDriver->wait(90, 1500)->until($condition);
-        self::$webDriver->findElement($element)->click();
     }
 }

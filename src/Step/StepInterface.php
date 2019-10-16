@@ -9,7 +9,8 @@ namespace Pagantis\SeleniumFormUtils\Step;
 interface StepInterface
 {
     /**
-     * @return void
+     * @param bool $rejected
+     * @return bool
      */
-    public function run();
+    public function run($rejected = false);
 }
