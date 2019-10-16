@@ -16,7 +16,9 @@ class Application extends AbstractStep
      */
     const STEP = 'Application';
 
-    const CARD_NUMBER = '5555555555554444';
+    const VALID_CARD_NUMBER = '4111111111111111';
+
+    const REJECTED_CARD_NUMBER = '4012888888881881';
 
     const CARD_CVC = '123';
 
@@ -25,9 +27,10 @@ class Application extends AbstractStep
     /**
      * Pass from confirm-data to next step in Application Form
      *
+     * @param bool $rejected
      * @throws \Exception
      */
-    public function run()
+    public function run($rejected = false)
     {
         $this->validateStep(self::STEP);
 
@@ -39,7 +42,8 @@ class Application extends AbstractStep
             $this->moveToIFrame($iFrameOneId);
             $this->waitTobeVisible(WebDriverBy::id('card_number'));
             $creditCardNumber = $this->webDriver->findElement(WebDriverBy::name('card_number'));
-            $creditCardNumber->clear()->sendKeys(self::CARD_NUMBER);
+            $card = $rejected ? self::REJECTED_CARD_NUMBER : self::VALID_CARD_NUMBER;
+            $creditCardNumber->clear()->sendKeys($card);
             $this->moveToParent();
 
             $fullName = $this->webDriver->findElement(WebDriverBy::name('fullName'));
@@ -51,7 +55,6 @@ class Application extends AbstractStep
             $cvv = $this->webDriver->findElement(WebDriverBy::id('cvv'));
             $cvv->clear()->sendKeys(self::CARD_CVC);
             $this->moveToParent();
-
             $formContinue = $this->webDriver->findElement(WebDriverBy::name('continue_button'));
             $formContinue->click();
         } catch (\Exception $exception) {

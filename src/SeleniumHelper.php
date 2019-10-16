@@ -6,7 +6,7 @@ use Facebook\WebDriver\WebDriver;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverExpectedCondition;
 use Pagantis\SeleniumFormUtils\Step\AbstractStep;
-use Pagantis\SeleniumFormUtils\Step\Application;
+use Pagantis\SeleniumFormUtils\Step\Rejected;
 
 /**
  * Class SeleniumHelper
@@ -36,30 +36,30 @@ class SeleniumHelper
         '25' => 'ConfirmData',
         '50' => 'Missing',
         '75' => 'Application',
+        '100' => 'Rejected',
     );
 
     /**
      * @param WebDriver $webDriver
-     * @param string $mobilePhone
+     * @param bool $rejected
      *
      * @throws \Exception
      */
-    public static function finishForm(WebDriver $webDriver, $mobilePhone = null)
+    public static function finishForm(WebDriver $webDriver, $rejected = false)
     {
         self::$webDriver = $webDriver;
-        self::$mobilePhone = $mobilePhone;
         self::waitToLoad();
         self::validateFormUrl();
-        $maxSteps = 15;
+        $maxSteps = 20;
         do {
+            self::waitToLoad();
             $formStep = self::getFormStep();
             $formStepClass = "\\".self::getStepClass($formStep);
             /** @var AbstractStep $stepClass */
             $stepClass = new $formStepClass(self::$webDriver);
-            $stepClass->run();
-            self::waitToLoad();
+            $stepClass->run($rejected);
             --$maxSteps;
-        } while ($formStep !== Application::STEP && $maxSteps > 0);
+        } while ($formStep !== Rejected::STEP && $maxSteps > 0);
 
         if ($maxSteps <= 0) {
             throw new \Exception('Error while finishing form, step: ' . $formStep);
@@ -68,14 +68,12 @@ class SeleniumHelper
 
     /**
      * @param WebDriver $webDriver
-     * @param string $mobilePhone
      *
      * @throws \Exception
      */
-    public static function cancelForm(WebDriver $webDriver, $mobilePhone = null)
+    public static function cancelForm(WebDriver $webDriver)
     {
         self::$webDriver = $webDriver;
-        self::$mobilePhone = $mobilePhone;
         self::waitToLoad();
         self::validateFormUrl();
 

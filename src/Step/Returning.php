@@ -14,14 +14,15 @@ class Returning extends AbstractStep
     /**
      * Handler step
      */
-    const STEP = '/returning';
+    const STEP = 'Returning';
 
     /**
-     * Pass from returning to next step in Application Form
+     * Return to shop without make a purchase
      *
+     * @param bool $rejected
      * @throws \Exception
      */
-    public function run()
+    public function run($rejected = false)
     {
         $this->validateStep(self::STEP);
         //Click on confirm:

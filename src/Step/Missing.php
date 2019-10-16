@@ -35,11 +35,12 @@ class Missing extends AbstractStep
     }
 
     /**
-     * Pass from confirm-data to next step in Application Form
+     * Second step fill the form data (dni, address...)
      *
+     * @param bool $rejected
      * @throws \Exception
      */
-    public function run()
+    public function run($rejected = false)
     {
         $this->validateStep(self::STEP);
 
