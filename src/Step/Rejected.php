@@ -20,13 +20,15 @@ class Rejected extends AbstractStep
      * Forth step reject an order and return tu shop
      *
      * @param bool $rejected
+     * @return bool
      * @throws \Exception
      */
     public function run($rejected = false)
     {
-        var_dump("rejected");
         $this->validateStep(self::STEP);
         $formContinue = $this->webDriver->findElement(WebDriverBy::name('back_to_store_button'));
         $formContinue->click();
+
+        return false;
     }
 }

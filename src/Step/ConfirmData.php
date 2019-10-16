@@ -20,6 +20,7 @@ class ConfirmData extends AbstractStep
      * First step Confirm retrieved data
      *
      * @param bool $rejected
+     * @return bool
      * @throws \Exception
      */
     public function run($rejected = false)
@@ -30,5 +31,7 @@ class ConfirmData extends AbstractStep
         $confirmCheckbox->click();
         $formContinue = $this->webDriver->findElement(WebDriverBy::name('continue_button'));
         $formContinue->click();
+
+        return true;
     }
 }

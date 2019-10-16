@@ -10,7 +10,7 @@ interface StepInterface
 {
     /**
      * @param bool $rejected
-     * @return void
+     * @return bool
      */
     public function run($rejected = false);
 }

@@ -20,6 +20,7 @@ class Returning extends AbstractStep
      * Return to shop without make a purchase
      *
      * @param bool $rejected
+     * @return bool
      * @throws \Exception
      */
     public function run($rejected = false)
@@ -31,5 +32,7 @@ class Returning extends AbstractStep
         $this->moveToParent();
         $formContinue = $this->webDriver->findElement(WebDriverBy::name('one_click_expiration_date_confirm'));
         $formContinue->click();
+
+        return false;
     }
 }

@@ -38,6 +38,7 @@ class Missing extends AbstractStep
      * Second step fill the form data (dni, address...)
      *
      * @param bool $rejected
+     * @return bool
      * @throws \Exception
      */
     public function run($rejected = false)
@@ -119,5 +120,6 @@ class Missing extends AbstractStep
         } catch (\Exception $exception) {
             unset($exception);
         }
+        return true;
     }
 }

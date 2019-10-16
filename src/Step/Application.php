@@ -28,6 +28,7 @@ class Application extends AbstractStep
      * Pass from confirm-data to next step in Application Form
      *
      * @param bool $rejected
+     * @return bool
      * @throws \Exception
      */
     public function run($rejected = false)
@@ -57,6 +58,8 @@ class Application extends AbstractStep
             $this->moveToParent();
             $formContinue = $this->webDriver->findElement(WebDriverBy::name('continue_button'));
             $formContinue->click();
+
+            return true;
         } catch (\Exception $exception) {
             unset($exception);
         }
