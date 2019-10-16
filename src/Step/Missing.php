@@ -46,47 +46,65 @@ class Missing extends AbstractStep
         $this->validateStep(self::STEP);
 
         /*
-         * Mandatory DNI:
+         * Field DNI:
          */
-        $name = $this->webDriver->findElement(WebDriverBy::name('dni'));
-        $name->clear()->sendKeys($this->getDNI());
-
+        try {
+            $name = $this->webDriver->findElement(WebDriverBy::name('dni'));
+            $name->clear()->sendKeys($this->getDNI());
+        } catch (\Exception $exception) {
+            unset($exception);
+        }
         /*
-         * Mandatory BirthDate:
+         * Field BirthDate:
          */
-        $dob = $this->webDriver->findElement(WebDriverBy::name('dob'));
-        $dob->clear()->sendKeys(
-            $this->faker->numberBetween(1, 28).
-            $this->faker->numberBetween(1, 12).
-            '1975'
-        );
-
+        try {
+            $dob = $this->webDriver->findElement(WebDriverBy::name('dob'));
+            $dob->clear()->sendKeys(
+                $this->faker->numberBetween(1, 28).
+                $this->faker->numberBetween(1, 12).
+                '1975'
+            );
+        } catch (\Exception $exception) {
+            unset($exception);
+        }
         /*
-         * Mandatory address:
+         * Field address:
          */
-        $name = $this->webDriver->findElement(WebDriverBy::name('address'));
-        $name->clear()->sendKeys($this->faker->address. ' ' . $this->faker->city);
-
+        try {
+            $name = $this->webDriver->findElement(WebDriverBy::name('address'));
+            $name->clear()->sendKeys($this->faker->address. ' ' . $this->faker->city);
+        } catch (\Exception $exception) {
+            unset($exception);
+        }
         /*
-         * Optional city:
+         * Field city:
          */
-        $name = $this->webDriver->findElement(WebDriverBy::name('city'));
-        $name->clear()->sendKeys($this->faker->city);
-
+        try {
+            $name = $this->webDriver->findElement(WebDriverBy::name('city'));
+            $name->clear()->sendKeys($this->faker->city);
+        } catch (\Exception $exception) {
+            unset($exception);
+        }
         /*
-         * Optional zipcode:
+         * Field zipcode:
          */
-        $name = $this->webDriver->findElement(WebDriverBy::name('zipcode'));
-        $name->clear()->sendKeys('28045');
-
+        try {
+            $name = $this->webDriver->findElement(WebDriverBy::name('zipcode'));
+            $name->clear()->sendKeys('28045');
+        } catch (\Exception $exception) {
+            unset($exception);
+        }
         /*
-         * Optional Phone:
+         * Field Phone:
          */
-        $name = $this->webDriver->findElement(WebDriverBy::name('mobilePhone'));
-        $name->clear()->sendKeys('6' . $this->faker->randomNumber(8));
-
+        try {
+            $name = $this->webDriver->findElement(WebDriverBy::name('mobilePhone'));
+            $name->clear()->sendKeys('6' . $this->faker->randomNumber(8));
+        } catch (\Exception $exception) {
+            unset($exception);
+        }
         /*
-         * Optional Full Name:
+         * Field Full Name:
          */
         try {
             $name = $this->webDriver->findElement(WebDriverBy::name('name'));
@@ -98,7 +116,7 @@ class Missing extends AbstractStep
         }
 
         /*
-         * Optional password:
+         * Field password:
          */
         try {
             $name = $this->webDriver->findElement(WebDriverBy::name('password'));
