@@ -56,13 +56,14 @@ class Application extends AbstractStep
             $cvv = $this->webDriver->findElement(WebDriverBy::id('cvv'));
             $cvv->clear()->sendKeys(self::CARD_CVC);
             $this->moveToParent();
-            $formContinue = $this->webDriver->findElement(WebDriverBy::name('continue_button'));
-            $formContinue->click();
-
-            return true;
         } catch (\Exception $exception) {
+            var_dump($exception);
             unset($exception);
+            return false;
         }
-        return false;
+
+        $formContinue = $this->webDriver->findElement(WebDriverBy::name('continue_button'));
+        $formContinue->click();
+        return true;
     }
 }
