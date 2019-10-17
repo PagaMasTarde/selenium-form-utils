@@ -57,7 +57,7 @@ class Application extends AbstractStep
             $cvv->clear()->sendKeys(self::CARD_CVC);
             $this->moveToParent();
         } catch (\Exception $exception) {
-            var_dump($exception);
+            var_dump($exception->getMessage());
             unset($exception);
             return false;
         }
