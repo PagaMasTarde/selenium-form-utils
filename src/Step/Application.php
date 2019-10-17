@@ -63,5 +63,6 @@ class Application extends AbstractStep
         } catch (\Exception $exception) {
             unset($exception);
         }
+        return false;
     }
 }

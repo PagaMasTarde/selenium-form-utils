@@ -41,9 +41,10 @@ class SeleniumHelper
 
     /**
      * @param WebDriver $webDriver
-     * @param bool $rejected
-     *
-     * @throws \Exception
+     * @param bool      $rejected
+     * @return string Useful to parse the exit step
+     * @throws \Facebook\WebDriver\Exception\NoSuchElementException
+     * @throws \Facebook\WebDriver\Exception\TimeOutException
      */
     public static function finishForm(WebDriver $webDriver, $rejected = false)
     {
@@ -64,6 +65,8 @@ class SeleniumHelper
         if ($maxSteps <= 0) {
             throw new \Exception('Error while finishing form, step: ' . $formStep);
         }
+
+        return $formStep;
     }
 
     /**

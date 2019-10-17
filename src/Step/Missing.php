@@ -132,12 +132,9 @@ class Missing extends AbstractStep
         /*
          * Click form continue
          */
-        try {
-            $formContinue = $this->webDriver->findElement(WebDriverBy::name('continue_button'));
-            $formContinue->click();
-        } catch (\Exception $exception) {
-            unset($exception);
-        }
+        $formContinue = $this->webDriver->findElement(WebDriverBy::name('continue_button'));
+        $formContinue->click();
+
         return true;
     }
 }
