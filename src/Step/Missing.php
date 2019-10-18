@@ -133,7 +133,7 @@ class Missing extends AbstractStep
          * Click form continue
          */
         $element = WebDriverBy::name("continue_button");
-        $condition = WebDriverExpectedCondition::presenceOfElementLocated($element);
+        $condition = WebDriverExpectedCondition::elementToBeClickable($element);
         $this->webDriver->wait(90, 1500)->until($condition);
 
         $formContinue = $this->webDriver->findElement(WebDriverBy::name('continue_button'));
