@@ -59,11 +59,7 @@ class Missing extends AbstractStep
          */
         try {
             $dob = $this->webDriver->findElement(WebDriverBy::name('dob'));
-            $dob->clear()->sendKeys(
-                $this->faker->numberBetween(1, 28).
-                $this->faker->numberBetween(1, 12).
-                '1975'
-            );
+            $dob->clear()->sendKeys('12/12/1979');
         } catch (\Exception $exception) {
             unset($exception);
         }
@@ -136,7 +132,7 @@ class Missing extends AbstractStep
         $condition = WebDriverExpectedCondition::elementToBeClickable($element);
         $this->webDriver->wait(90, 1500)->until($condition);
 
-        $formContinue = $this->webDriver->findElement(WebDriverBy::name('continue_button'));
+        $formContinue = $this->webDriver->findElement($element);
         $formContinue->click();
 
         return true;
