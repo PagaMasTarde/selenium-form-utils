@@ -22,11 +22,7 @@ class SeleniumHelperTest extends AbstractTest
         // fails.
         $from = parse_url($this->webDriver->getCurrentUrl(), PHP_URL_HOST);
         $to = parse_url($order->getConfiguration()->getUrls()->getCancel(), PHP_URL_HOST);
-        try {
-            $this->assertContains($from, array($to));
-        } catch (\Exception $exception) {
-            var_dump($from, array($to));
-        }
+        $this->assertContains($from, array($to));
         $this->webDriver->quit();
     }
 
