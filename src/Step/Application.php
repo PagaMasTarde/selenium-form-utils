@@ -38,7 +38,8 @@ class Application extends AbstractStep
         try {
             $iframe = $this->webDriver->findElement(WebDriverBy::tagName('iframe'));
             $iFrameOneId = $iframe->getAttribute('name');
-            $iFrameTwoId = 'spreedly-cvv-frame-'.end(explode('-', $iFrameOneId));
+            $spreedlyCode = explode('-', $iFrameOneId);
+            $iFrameTwoId = 'spreedly-cvv-frame-'.end($spreedlyCode);
 
             $this->moveToIFrame($iFrameOneId);
             $this->waitTobeVisible(WebDriverBy::id('card_number'));
@@ -46,7 +47,7 @@ class Application extends AbstractStep
             $card = $rejected ? self::REJECTED_CARD_NUMBER : self::VALID_CARD_NUMBER;
             $creditCardNumber->clear()->sendKeys($card);
             $this->moveToParent();
-
+            sleep(1);
             $fullName = $this->webDriver->findElement(WebDriverBy::name('fullName'));
             $fullName->clear()->sendKeys(self::CARD_HOLDER);
             $expirationDate = $this->webDriver->findElement(WebDriverBy::name('expirationDate'));
@@ -56,8 +57,8 @@ class Application extends AbstractStep
             $cvv = $this->webDriver->findElement(WebDriverBy::id('cvv'));
             $cvv->clear()->sendKeys(self::CARD_CVC);
             $this->moveToParent();
+            sleep(1);
         } catch (\Exception $exception) {
-            var_dump($exception->getMessage());
             unset($exception);
             return false;
         }
