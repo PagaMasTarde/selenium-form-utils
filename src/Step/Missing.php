@@ -3,7 +3,7 @@
 namespace Pagantis\SeleniumFormUtils\Step;
 
 use Facebook\WebDriver\WebDriverBy;
-use Facebook\WebDriver\WebDriverSelect;
+use Facebook\WebDriver\WebDriverExpectedCondition;
 use Faker\Factory;
 use Pagantis\SeleniumFormUtils\SeleniumHelper;
 use Pagantis\SeleniumFormUtils\Step\AbstractStep;
@@ -59,11 +59,7 @@ class Missing extends AbstractStep
          */
         try {
             $dob = $this->webDriver->findElement(WebDriverBy::name('dob'));
-            $dob->clear()->sendKeys(
-                $this->faker->numberBetween(1, 28).
-                $this->faker->numberBetween(1, 12).
-                '1975'
-            );
+            $dob->clear()->sendKeys('12/12/1979');
         } catch (\Exception $exception) {
             unset($exception);
         }
@@ -132,12 +128,17 @@ class Missing extends AbstractStep
         /*
          * Click form continue
          */
+        $element = WebDriverBy::name("continue_button");
         try {
-            $formContinue = $this->webDriver->findElement(WebDriverBy::name('continue_button'));
+            $condition = WebDriverExpectedCondition::elementToBeClickable($element);
+            $this->webDriver->wait(90, 1500)->until($condition);
+            $formContinue = $this->webDriver->findElement($element);
             $formContinue->click();
         } catch (\Exception $exception) {
+            sleep(10);
             unset($exception);
         }
+
         return true;
     }
 }

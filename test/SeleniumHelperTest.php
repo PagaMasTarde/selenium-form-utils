@@ -19,7 +19,7 @@ class SeleniumHelperTest extends AbstractTest
         $this->webDriver->get($order->getActionUrls()->getForm());
         SeleniumHelper::cancelForm($this->webDriver) ;
         // Can only compare host because several sites redirect 404 and other accesses to a custom error page and curl
-        // fails
+        // fails.
         $from = parse_url($this->webDriver->getCurrentUrl(), PHP_URL_HOST);
         $to = parse_url($order->getConfiguration()->getUrls()->getCancel(), PHP_URL_HOST);
         $this->assertContains($from, array($to));
