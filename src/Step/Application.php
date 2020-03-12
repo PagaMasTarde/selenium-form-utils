@@ -42,16 +42,20 @@ class Application extends AbstractStep
             $iFrameTwoId = 'spreedly-cvv-frame-'.end($spreedlyCode);
 
             $this->moveToIFrame($iFrameOneId);
-            $this->waitTobeVisible(WebDriverBy::id('card_number'));
-            $creditCardNumber = $this->webDriver->findElement(WebDriverBy::name('card_number'));
-            $card = $rejected ? self::REJECTED_CARD_NUMBER : self::VALID_CARD_NUMBER;
-            $creditCardNumber->clear()->sendKeys($card);
-            $this->moveToParent();
-            sleep(1);
-            $fullName = $this->webDriver->findElement(WebDriverBy::name('fullName'));
-            $fullName->clear()->sendKeys(self::CARD_HOLDER);
-            $expirationDate = $this->webDriver->findElement(WebDriverBy::name('expirationDate'));
-            $expirationDate->clear()->sendKeys('1221');
+            try {
+                $this->waitTobeVisible(WebDriverBy::id('card_number'));
+                $creditCardNumber = $this->webDriver->findElement(WebDriverBy::name('card_number'));
+                $card             = $rejected ? self::REJECTED_CARD_NUMBER : self::VALID_CARD_NUMBER;
+                $creditCardNumber->clear()->sendKeys($card);
+                $this->moveToParent();
+                sleep(1);
+                $fullName = $this->webDriver->findElement(WebDriverBy::name('fullName'));
+                $fullName->clear()->sendKeys(self::CARD_HOLDER);
+                $expirationDate = $this->webDriver->findElement(WebDriverBy::name('expirationDate'));
+                $expirationDate->clear()->sendKeys('1221');
+            } catch (\Exception $e) {
+                echo "Exception ->".$e->getMessage();
+            }
 
             $this->moveToIFrame($iFrameTwoId);
             $cvv = $this->webDriver->findElement(WebDriverBy::id('cvv'));
