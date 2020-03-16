@@ -41,21 +41,36 @@ class Application extends AbstractStep
             $spreedlyCode = explode('-', $iFrameOneId);
             $iFrameTwoId = 'spreedly-cvv-frame-'.end($spreedlyCode);
 
-            $this->moveToIFrame($iFrameOneId);
-            $this->waitTobeVisible(WebDriverBy::id('card_number'));
-            $creditCardNumber = $this->webDriver->findElement(WebDriverBy::name('card_number'));
-            $card = $rejected ? self::REJECTED_CARD_NUMBER : self::VALID_CARD_NUMBER;
-            $creditCardNumber->clear()->sendKeys($card);
+            //CVV IFRAME
             $this->moveToParent();
-            sleep(1);
-            $fullName = $this->webDriver->findElement(WebDriverBy::name('fullName'));
-            $fullName->clear()->sendKeys(self::CARD_HOLDER);
-            $expirationDate = $this->webDriver->findElement(WebDriverBy::name('expirationDate'));
-            $expirationDate->clear()->sendKeys('1221');
-
             $this->moveToIFrame($iFrameTwoId);
             $cvv = $this->webDriver->findElement(WebDriverBy::id('cvv'));
             $cvv->clear()->sendKeys(self::CARD_CVC);
+            $this->moveToParent();
+
+            //CARD IFRAME
+            $this->moveToIFrame($iFrameOneId);
+            $messageElementSearch = WebDriverBy::id('card_number');
+            sleep(2);
+
+            $cardNumberIframe = $this->webDriver->findElement($messageElementSearch);
+            if ($cardNumberIframe!='') {
+                $cardNumberStyle = $cardNumberIframe->getAttribute('style');
+            }
+
+            if (strpos($cardNumberStyle, "display: none")===false) {
+                $this->waitTobeVisible(WebDriverBy::id('card_number'));
+                $creditCardNumber = $this->webDriver->findElement(WebDriverBy::name('card_number'));
+                $card             = $rejected ? self::REJECTED_CARD_NUMBER : self::VALID_CARD_NUMBER;
+                $creditCardNumber->clear()->sendKeys($card);
+                $this->moveToParent();
+                sleep(1);
+                $fullName = $this->webDriver->findElement(WebDriverBy::name('fullName'));
+                $fullName->clear()->sendKeys(self::CARD_HOLDER);
+                $expirationDate = $this->webDriver->findElement(WebDriverBy::name('expirationDate'));
+                $expirationDate->clear()->sendKeys('1221');
+            }
+
             $this->moveToParent();
             sleep(1);
         } catch (\Exception $exception) {
