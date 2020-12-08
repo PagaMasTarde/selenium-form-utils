@@ -5,39 +5,24 @@ namespace Pagantis\SeleniumFormUtils;
 use Facebook\WebDriver\WebDriver;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverExpectedCondition;
-use Pagantis\SeleniumFormUtils\Step\AbstractStep;
-use Pagantis\SeleniumFormUtils\Step\Rejected;
+use Clearpay\SeleniumFormUtils\Step\AbstractStep;
+use Clearpay\SeleniumFormUtils\Step\Rejected;
 
 /**
  * Class SeleniumHelper
- * @package Pagantis\SeleniumFormUtils
+ * @package Clearpay\SeleniumFormUtils
  */
 class SeleniumHelper
 {
     /**
      * Form base domain, initial status to verify before start testing
      */
-    const FORM_BASE_URL = 'https://form.sbx.pagantis.com';
+    const FORM_BASE_URL = 'clearpay.com';
 
     /**
      * @var WebDriver
      */
     protected static $webDriver;
-
-    /**
-     * @var string $mobilePhone needed to identify returning users
-     */
-    public static $mobilePhone = null;
-
-    /**
-     * @var array $arraySteps
-     */
-    public static $arraySteps = array (
-        '25' => 'ConfirmData',
-        '50' => 'Missing',
-        '75' => 'Application',
-        '100' => 'Rejected',
-    );
 
     /**
      * @param WebDriver $webDriver
@@ -102,22 +87,20 @@ class SeleniumHelper
     }
 
     /**
-     * Get the step of the breadcrumb progress bar
+     * Get the step of the url
      *
      * @return string
      */
     protected static function getFormStep()
     {
+        $formStep = explode(DIRECTORY_SEPARATOR, self::$webDriver>getCurrentURL());
 
-        return self::$arraySteps[
-            self::$webDriver->findElement(WebDriverBy::cssSelector(".ProgressBar progress"))
-            ->getAttribute("value")
-        ];
+        return array_pop($formStep);
     }
 
     /**
      * Turn the form step into a selenium handler class:
-     * from: '/result/status-approved' to '\Result\StatusApproved'
+     * from: 'status-approved' to 'StatusApproved'
      *
      * @param $formStep
      *
@@ -126,7 +109,7 @@ class SeleniumHelper
     protected static function getStepClass($formStep)
     {
         $formSteps = explode(DIRECTORY_SEPARATOR, $formStep);
-        $stepClass = 'Pagantis\SeleniumFormUtils\Step';
+        $stepClass = 'Clearpay\SeleniumFormUtils\Step';
         foreach ($formSteps as $formStep) {
             if ($formStep !== '') {
                 $stepClass .= "\\".str_replace('-', '', ucwords($formStep, '-'));
@@ -142,8 +125,8 @@ class SeleniumHelper
      */
     public static function waitToLoad()
     {
-        $element = WebDriverBy::cssSelector(".MainContainer");
-        $condition = WebDriverExpectedCondition::presenceOfElementLocated($element);
-        self::$webDriver->wait(90, 1500)->until($condition);
+        $condition = WebDriverExpectedCondition::titleContains(self::PAGANTIS_TITLE);
+        self::$webDriver->wait(90, 1500)
+                        ->until($condition, self::$webDriver->getCurrentURL());
     }
 }
