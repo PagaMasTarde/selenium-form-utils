@@ -69,23 +69,6 @@ abstract class AbstractStep implements StepInterface
     }
 
     /**
-     * @param string $step
-     *
-     * @throws \Exception
-     */
-    public function validateStep($step)
-    {
-        $currentStep = SeleniumHelper::$arraySteps[
-            $this->webDriver->findElement(WebDriverBy::cssSelector(".ProgressBar progress"))
-                ->getAttribute("value")
-        ];
-
-        if ($step !== $currentStep) {
-            throw new \Exception('Wrong step: ' . $arraySteps[$step]);
-        }
-    }
-
-    /**
      * @param $iFrameLocator
      *
      * @throws \Facebook\WebDriver\Exception\NoSuchElementException
