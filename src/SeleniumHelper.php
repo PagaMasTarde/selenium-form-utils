@@ -5,8 +5,9 @@ namespace Pagantis\SeleniumFormUtils;
 use Facebook\WebDriver\WebDriver;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverExpectedCondition;
-use Clearpay\SeleniumFormUtils\Step\AbstractStep;
-use Clearpay\SeleniumFormUtils\Step\Rejected;
+use Pagantis\SeleniumFormUtils\Step\AbstractStep;
+use Pagantis\SeleniumFormUtils\Step\Rejected;
+use Pagantis\SeleniumFormUtils\Step\AccountVerification;
 
 /**
  * Class SeleniumHelper
@@ -18,6 +19,11 @@ class SeleniumHelper
      * Form base domain, initial status to verify before start testing
      */
     const FORM_BASE_URL = 'clearpay.com';
+
+    /**
+     *
+     */
+    const CLEARPAY_TITLE = 'Clearpay';
 
     /**
      * @var WebDriver
@@ -40,7 +46,11 @@ class SeleniumHelper
         do {
             self::waitToLoad();
             $formStep = self::getFormStep();
-            $formStepClass = "\\".self::getStepClass($formStep);
+            if(self::stepIsExcluded($formStep)){
+                $continue = true;
+                continue;
+            }
+            $formStepClass = self::getStepClass($formStep);
             /** @var AbstractStep $stepClass */
             $stepClass = new $formStepClass(self::$webDriver);
             $continue = $stepClass->run($rejected);
@@ -52,6 +62,16 @@ class SeleniumHelper
         }
 
         return $formStep;
+    }
+
+    /**
+     * @param $currentStep
+     *
+     * @return bool
+     */
+    public static function stepIsExcluded($currentStep)
+    {
+        return (substr($currentStep,0,4) === '004.');
     }
 
     /**
@@ -93,7 +113,7 @@ class SeleniumHelper
      */
     protected static function getFormStep()
     {
-        $formStep = explode(DIRECTORY_SEPARATOR, self::$webDriver>getCurrentURL());
+        $formStep = explode(DIRECTORY_SEPARATOR, self::$webDriver->getCurrentURL());
 
         return array_pop($formStep);
     }
@@ -109,7 +129,7 @@ class SeleniumHelper
     protected static function getStepClass($formStep)
     {
         $formSteps = explode(DIRECTORY_SEPARATOR, $formStep);
-        $stepClass = 'Clearpay\SeleniumFormUtils\Step';
+        $stepClass = 'Pagantis\SeleniumFormUtils\Step';
         foreach ($formSteps as $formStep) {
             if ($formStep !== '') {
                 $stepClass .= "\\".str_replace('-', '', ucwords($formStep, '-'));
@@ -125,7 +145,7 @@ class SeleniumHelper
      */
     public static function waitToLoad()
     {
-        $condition = WebDriverExpectedCondition::titleContains(self::PAGANTIS_TITLE);
+        $condition = WebDriverExpectedCondition::titleContains(self::CLEARPAY_TITLE);
         self::$webDriver->wait(90, 1500)
                         ->until($condition, self::$webDriver->getCurrentURL());
     }
