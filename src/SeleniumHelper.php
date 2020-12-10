@@ -55,7 +55,7 @@ class SeleniumHelper
             $stepClass = new $formStepClass(self::$webDriver);
             $continue = $stepClass->run($rejected);
             --$maxSteps;
-        } while ($continue && $formStep !== Rejected::STEP && $maxSteps > 0);
+        } while ($continue && $maxSteps > 0);
 
         if ($maxSteps <= 0) {
             throw new \Exception('Error while finishing form, step: ' . $formStep);
