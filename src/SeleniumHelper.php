@@ -39,23 +39,28 @@ class SeleniumHelper
      */
     public static function finishForm(WebDriver $webDriver, $rejected = false)
     {
-        self::$webDriver = $webDriver;
-        self::waitToLoad();
-        self::validateFormUrl();
-        $maxSteps = 20;
-        do {
+        try {
+            self::$webDriver = $webDriver;
             self::waitToLoad();
-            $formStep = self::getFormStep();
-            if(self::stepIsExcluded($formStep)){
-                $continue = true;
-                continue;
-            }
-            $formStepClass = self::getStepClass($formStep);
-            /** @var AbstractStep $stepClass */
-            $stepClass = new $formStepClass(self::$webDriver);
-            $continue = $stepClass->run($rejected);
-            --$maxSteps;
-        } while ($continue && $maxSteps > 0);
+            self::validateFormUrl();
+            $maxSteps = 20;
+            do {
+                self::waitToLoad();
+                $formStep = self::getFormStep();
+                if(self::stepIsExcluded($formStep)){
+                    $continue = true;
+                    continue;
+                }
+                $formStepClass = self::getStepClass($formStep);
+                /** @var AbstractStep $stepClass */
+                $stepClass = new $formStepClass(self::$webDriver);
+                $continue = $stepClass->run($rejected);
+                --$maxSteps;
+            } while ($continue && $maxSteps>0);
+        } catch (\Exception $exception) {
+            echo $exception->getMessage();
+            echo self::$webDriver->getCurrentURL();
+        }
 
         if ($maxSteps <= 0) {
             throw new \Exception('Error while finishing form, step: ' . $formStep);
