@@ -38,9 +38,11 @@ class OrderConfirmation extends AbstractStep
             $condition  = WebDriverExpectedCondition::presenceOfElementLocated($errorElementSearch);
             $this->webDriver->wait()->until($condition);
             $this->assertTrue((bool) $condition, "ERROR ON ".self::STEP);
+            return false;
         }
 
         //Click on popup
+        sleep(3);
         $buttonElementSearch = WebDriverBy::name('dialogButton');
         $condition  = WebDriverExpectedCondition::presenceOfElementLocated($buttonElementSearch);
         $this->webDriver->wait()->until($condition);
@@ -52,8 +54,7 @@ class OrderConfirmation extends AbstractStep
         $condition  = WebDriverExpectedCondition::presenceOfElementLocated($buttonElementSearch);
         $this->webDriver->wait()->until($condition);
         $formContinue = $this->webDriver->findElement($buttonElementSearch)->click();
-
-        sleep(5);
+        sleep(3);
 
         return false;
     }
