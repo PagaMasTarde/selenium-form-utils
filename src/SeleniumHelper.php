@@ -60,6 +60,7 @@ class SeleniumHelper
         } catch (\Exception $exception) {
             echo $exception->getMessage();
             echo self::$webDriver->getCurrentURL();
+            echo self::$webDriver->getPageSource();
         }
 
         if ($maxSteps <= 0) {
