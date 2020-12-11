@@ -7,37 +7,28 @@ use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverExpectedCondition;
 use Pagantis\SeleniumFormUtils\Step\AbstractStep;
 use Pagantis\SeleniumFormUtils\Step\Rejected;
+use Pagantis\SeleniumFormUtils\Step\AccountVerification;
 
 /**
  * Class SeleniumHelper
- * @package Pagantis\SeleniumFormUtils
+ * @package Clearpay\SeleniumFormUtils
  */
 class SeleniumHelper
 {
     /**
      * Form base domain, initial status to verify before start testing
      */
-    const FORM_BASE_URL = 'https://form.sbx.pagantis.com';
+    const FORM_BASE_URL = 'clearpay.com';
+
+    /**
+     *
+     */
+    const CLEARPAY_TITLE = 'Clearpay';
 
     /**
      * @var WebDriver
      */
     protected static $webDriver;
-
-    /**
-     * @var string $mobilePhone needed to identify returning users
-     */
-    public static $mobilePhone = null;
-
-    /**
-     * @var array $arraySteps
-     */
-    public static $arraySteps = array (
-        '25' => 'ConfirmData',
-        '50' => 'Missing',
-        '75' => 'Application',
-        '100' => 'Rejected',
-    );
 
     /**
      * @param WebDriver $webDriver
@@ -48,25 +39,45 @@ class SeleniumHelper
      */
     public static function finishForm(WebDriver $webDriver, $rejected = false)
     {
-        self::$webDriver = $webDriver;
-        self::waitToLoad();
-        self::validateFormUrl();
-        $maxSteps = 20;
-        do {
+        try {
+            self::$webDriver = $webDriver;
             self::waitToLoad();
-            $formStep = self::getFormStep();
-            $formStepClass = "\\".self::getStepClass($formStep);
-            /** @var AbstractStep $stepClass */
-            $stepClass = new $formStepClass(self::$webDriver);
-            $continue = $stepClass->run($rejected);
-            --$maxSteps;
-        } while ($continue && $formStep !== Rejected::STEP && $maxSteps > 0);
+            self::validateFormUrl();
+            $maxSteps = 20;
+            do {
+                self::waitToLoad();
+                $formStep = self::getFormStep();
+                if(self::stepIsExcluded($formStep)){
+                    $continue = true;
+                    continue;
+                }
+                $formStepClass = self::getStepClass($formStep);
+                /** @var AbstractStep $stepClass */
+                $stepClass = new $formStepClass(self::$webDriver);
+                $continue = $stepClass->run($rejected);
+                --$maxSteps;
+            } while ($continue && $maxSteps>0);
+        } catch (\Exception $exception) {
+            echo $exception->getMessage();
+            echo self::$webDriver->getCurrentURL();
+            echo self::$webDriver->getPageSource();
+        }
 
         if ($maxSteps <= 0) {
             throw new \Exception('Error while finishing form, step: ' . $formStep);
         }
 
         return $formStep;
+    }
+
+    /**
+     * @param $currentStep
+     *
+     * @return bool
+     */
+    public static function stepIsExcluded($currentStep)
+    {
+        return (substr($currentStep,0,4) === '004.');
     }
 
     /**
@@ -102,22 +113,20 @@ class SeleniumHelper
     }
 
     /**
-     * Get the step of the breadcrumb progress bar
+     * Get the step of the url
      *
      * @return string
      */
     protected static function getFormStep()
     {
+        $formStep = explode(DIRECTORY_SEPARATOR, self::$webDriver->getCurrentURL());
 
-        return self::$arraySteps[
-            self::$webDriver->findElement(WebDriverBy::cssSelector(".ProgressBar progress"))
-            ->getAttribute("value")
-        ];
+        return array_pop($formStep);
     }
 
     /**
      * Turn the form step into a selenium handler class:
-     * from: '/result/status-approved' to '\Result\StatusApproved'
+     * from: 'status-approved' to 'StatusApproved'
      *
      * @param $formStep
      *
@@ -142,8 +151,8 @@ class SeleniumHelper
      */
     public static function waitToLoad()
     {
-        $element = WebDriverBy::cssSelector(".MainContainer");
-        $condition = WebDriverExpectedCondition::presenceOfElementLocated($element);
-        self::$webDriver->wait(90, 1500)->until($condition);
+        $condition = WebDriverExpectedCondition::titleContains(self::CLEARPAY_TITLE);
+        self::$webDriver->wait(90, 1500)
+                        ->until($condition, self::$webDriver->getCurrentURL());
     }
 }
