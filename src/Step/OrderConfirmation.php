@@ -30,6 +30,7 @@ class OrderConfirmation extends AbstractStep
     {
         try{
             //Wait after redirection
+            sleep(3);
             $simulatorElementSearch = WebDriverBy::id('OrderConfirmation-container');
             $condition  = WebDriverExpectedCondition::presenceOfElementLocated($simulatorElementSearch);
             $this->webDriver->wait()->until($condition);
